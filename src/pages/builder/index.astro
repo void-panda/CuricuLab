@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { CVBuilder } from "@/components/CVBuilder";
+---
+
+<BaseLayout
+  title="CV Builder | CuricuLab"
+  description="Buat CV profesional dengan bantuan AI. Gratis, tanpa login, dan data tersimpan di browser Anda."
+>
+  <CVBuilder client:load />
+</BaseLayout>

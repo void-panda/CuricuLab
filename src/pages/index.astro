@@ -1,0 +1,338 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Button } from "@/components/ui/button";
+---
+
+<BaseLayout
+  title="CuricuLab - AI-Powered CV Builder"
+  description="Buat CV profesional dan ATS-friendly dengan bantuan AI. 100% gratis, tanpa login, data tersimpan di browser Anda."
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden">
+    <!-- Background Gradient -->
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-background to-secondary/10"
+    >
+    </div>
+
+    <div class="container py-24 md:py-32">
+      <div class="mx-auto max-w-3xl text-center">
+        <!-- Badge -->
+        <div
+          class="mb-6 inline-flex items-center gap-2 rounded-full border bg-background/50 px-4 py-1.5 text-sm backdrop-blur"
+        >
+          <span class="relative flex h-2 w-2">
+            <span
+              class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"
+            ></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"
+            ></span>
+          </span>
+          100% Gratis • Tanpa Login
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+          Buat CV
+          <span
+            class="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+          >
+            ATS-Friendly
+          </span>
+          <br />
+          dengan Bantuan AI
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="mt-6 text-lg text-muted-foreground md:text-xl">
+          CuricuLab membantu Anda membuat CV profesional yang lolos sistem ATS
+          dengan bantuan AI. Data Anda aman tersimpan di browser.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div
+          class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+        >
+          <a href="/builder">
+            <Button size="lg" className="gap-2 text-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"
+                ></path><polyline points="10 17 15 12 10 7"></polyline><line
+                  x1="15"
+                  x2="3"
+                  y1="12"
+                  y2="12"></line></svg
+              >
+              Mulai Buat CV
+            </Button>
+          </a>
+          <a href="#features">
+            <Button variant="outline" size="lg" className="text-lg">
+              Pelajari Lebih Lanjut
+            </Button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="border-t bg-muted/30 py-24">
+    <div class="container">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold md:text-4xl">Mengapa CuricuLab?</h2>
+        <p class="mt-4 text-muted-foreground">
+          Fitur lengkap untuk membuat CV terbaik Anda
+        </p>
+      </div>
+
+      <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Feature 1 -->
+        <div
+          class="rounded-2xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path
+                d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"
+              ></path></svg
+            >
+          </div>
+          <h3 class="mt-4 text-xl font-semibold">AI-Powered Enhancement</h3>
+          <p class="mt-2 text-muted-foreground">
+            AI membantu menulis dan menyempurnakan deskripsi pengalaman kerja
+            Anda agar lebih profesional dan ATS-friendly.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div
+          class="rounded-2xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/10 text-green-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path><path
+                d="m9 12 2 2 4-4"></path></svg
+            >
+          </div>
+          <h3 class="mt-4 text-xl font-semibold">100% Privasi Terjamin</h3>
+          <p class="mt-2 text-muted-foreground">
+            Semua data CV Anda tersimpan di browser. Tidak ada data yang dikirim
+            ke server kami. Privasi Anda terlindungi.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div
+          class="rounded-2xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path
+                d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+              ></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"
+              ></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg
+            >
+          </div>
+          <h3 class="mt-4 text-xl font-semibold">Template ATS-Friendly</h3>
+          <p class="mt-2 text-muted-foreground">
+            Template yang dirancang khusus agar mudah dibaca oleh sistem ATS
+            sekaligus tetap menarik secara visual.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div
+          class="rounded-2xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10 text-purple-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+              ></path><polyline points="7 10 12 15 17 10"></polyline><line
+                x1="12"
+                x2="12"
+                y1="15"
+                y2="3"></line></svg
+            >
+          </div>
+          <h3 class="mt-4 text-xl font-semibold">Export PDF & DOCX</h3>
+          <p class="mt-2 text-muted-foreground">
+            Download CV Anda dalam format PDF atau DOCX. Siap digunakan untuk
+            melamar pekerjaan.
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div
+          class="rounded-2xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-500/10 text-orange-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg
+            >
+          </div>
+          <h3 class="mt-4 text-xl font-semibold">Dark Mode</h3>
+          <p class="mt-2 text-muted-foreground">
+            Nyaman digunakan siang atau malam dengan dukungan tema gelap dan
+            terang.
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div
+          class="rounded-2xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-lg bg-pink-500/10 text-pink-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"
+              ></path></svg
+            >
+          </div>
+          <h3 class="mt-4 text-xl font-semibold">Gratis Selamanya</h3>
+          <p class="mt-2 text-muted-foreground">
+            Tidak ada biaya tersembunyi, tidak ada subscription, tidak ada
+            watermark. Gratis 100%.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-24">
+    <div class="container">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold md:text-4xl">Cara Kerja</h2>
+        <p class="mt-4 text-muted-foreground">
+          3 langkah mudah untuk membuat CV profesional
+        </p>
+      </div>
+
+      <div class="mt-16 grid gap-8 md:grid-cols-3">
+        <!-- Step 1 -->
+        <div class="relative text-center">
+          <div
+            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground"
+          >
+            1
+          </div>
+          <h3 class="mt-6 text-xl font-semibold">Isi Data CV</h3>
+          <p class="mt-2 text-muted-foreground">
+            Masukkan informasi pribadi, pengalaman kerja, pendidikan, dan
+            keahlian Anda.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="relative text-center">
+          <div
+            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground"
+          >
+            2
+          </div>
+          <h3 class="mt-6 text-xl font-semibold">Tingkatkan dengan AI</h3>
+          <p class="mt-2 text-muted-foreground">
+            Gunakan AI untuk menyempurnakan deskripsi dan mendapatkan saran
+            skill.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="relative text-center">
+          <div
+            class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground"
+          >
+            3
+          </div>
+          <h3 class="mt-6 text-xl font-semibold">Download & Lamar</h3>
+          <p class="mt-2 text-muted-foreground">
+            Export CV Anda ke PDF atau DOCX dan mulai melamar pekerjaan impian.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-16 text-center">
+        <a href="/builder">
+          <Button size="lg" className="gap-2 text-lg">
+            Mulai Sekarang - Gratis!
+          </Button>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
