@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 export function Header() {
   return (
     <header className="bg-background sticky top-0 z-50 w-full border-b">
-      <div className="container-wrapper 3xl:fixed:px-0 px-6">
+      <div className="container-wrapper 3xl:fixed:px-8 px-8">
         <div className="3xl:fixed:container flex h-(--header-height) items-center **:data-[slot=separator]:h-4!">
           <MobileNav className="flex lg:hidden" />
 

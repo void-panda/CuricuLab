@@ -199,7 +199,7 @@ export function ExperienceForm() {
     return (
         <Card className="neo-card w-full mb-8">
             <CardHeader className="border-b-4 border-black -mt-8 bg-yellow-400 p-6">
-                <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter">
+                <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase text-black tracking-tighter">
                     <Briefcase className="h-6 w-6 stroke-3" />
                     PENGALAMAN KERJA
                 </CardTitle>

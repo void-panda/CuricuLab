@@ -54,7 +54,7 @@ export function CVBuilder() {
             {/* Onboarding Flow */}
             <OnboardingModal />
 
-            <div className="flex h-[calc(100vh-var(--header-height)-var(--footer-height))] flex-col lg:flex-row bg-background">
+            <div className="flex h-[calc(100vh-var(--header-height)-var(--footer-height))] flex-col lg:flex-row bg-background dark:bg-muted/30 transition-colors">
                 {/* Form Section */}
                 <div className="flex-1 border-r-4 border-black lg:max-w-xl bg-white dark:bg-card overflow-hidden transition-colors">
                     <FormWizard
@@ -65,7 +65,7 @@ export function CVBuilder() {
                 </div>
 
                 {/* Preview Section */}
-                <div className="flex-1 hidden lg:flex lg:flex-col bg-[#f0f0f0] dark:bg-muted/50 overflow-hidden transition-colors">
+                <div className="flex-1 hidden lg:flex lg:flex-col bg-[#f0f0f0] dark:bg-muted/30 overflow-hidden transition-colors">
                     <TemplateRenderer
                         onExportPDF={handleExportPDF}
                         onExportDOCX={handleExportDOCX}

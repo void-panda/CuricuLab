@@ -49,7 +49,7 @@ export function TemplateRenderer({
     };
 
     return (
-        <div className="flex h-full flex-col bg-[#f0f0f0] dark:bg-muted/50 transition-colors">
+        <div className="flex h-full flex-col bg-[#f0f0f0] dark:bg-muted/30 transition-colors">
             {/* Header */}
             <div className="flex items-center justify-between border-b-4 border-black bg-white dark:bg-card p-4 transition-colors">
                 <div className="flex items-center gap-2">
