@@ -16,17 +16,17 @@ export function PersonalInfoForm() {
     }, []);
 
     return (
-        <Card className="w-full">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    Data Pribadi
+        <Card className="neo-card w-full mb-8">
+            <CardHeader className="border-b-4 border-black dark:border-white -mt-8 bg-yellow-400 p-6">
+                <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter">
+                    <User className="h-6 w-6 stroke-3" />
+                    DATA PRIBADI
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="font-bold text-black/80">
                     Masukkan informasi dasar Anda yang akan ditampilkan di CV
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6 p-6">
                 {/* Full Name */}
                 <div className="space-y-2">
                     <Label htmlFor="fullName">Nama Lengkap *</Label>

@@ -1,37 +1,41 @@
 // Export utilities for PDF and DOCX generation
 import type { CVData } from '@/types/cv';
+import React from 'react';
 
 /**
- * Export CV to PDF using html2pdf.js
+ * Export CV to PDF using @react-pdf/renderer (Real Selectable Text)
  */
 export async function exportToPDF(cvData: CVData): Promise<void> {
-    // Dynamic import to avoid SSR issues
-    const html2pdf = (await import('html2pdf.js')).default;
+    const { pdf } = await import('@react-pdf/renderer');
+    const { saveAs } = await import('file-saver');
 
-    const element = document.getElementById('cv-preview');
-    if (!element) {
-        throw new Error('CV preview element not found');
+    // Import PDF templates
+    const { CreativeATS01PDF } = await import('@/components/templates/pdf/CreativeATS01PDF');
+    const { CreativeATS02PDF } = await import('@/components/templates/pdf/CreativeATS02PDF');
+
+    const exportOptions = cvData.settings.exportOptions || {
+        margin: 'normal' as const,
+        pageSize: 'a4' as const,
+        filenamePrefix: 'CV'
+    };
+    const { filenamePrefix } = exportOptions;
+
+    const filename = `${filenamePrefix}_${cvData.personal.fullName.replace(/\s+/g, '_') || 'Document'}.pdf`;
+
+    // Map template to its PDF component
+    let PDFComponent = CreativeATS01PDF;
+    if (cvData.settings.template === 'creative-ats-02') {
+        PDFComponent = CreativeATS02PDF;
     }
 
-    const filename = `CV_${cvData.personal.fullName.replace(/\s+/g, '_') || 'Document'}.pdf`;
-
-    const options = {
-        margin: 10,
-        filename,
-        image: { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas: {
-            scale: 2,
-            useCORS: true,
-            letterRendering: true,
-        },
-        jsPDF: {
-            unit: 'mm' as const,
-            format: 'a4' as const,
-            orientation: 'portrait' as const,
-        },
-    };
-
-    await html2pdf().set(options).from(element).save();
+    try {
+        // Generate PDF blob
+        const blob = await pdf(React.createElement(PDFComponent, { data: cvData }) as any).toBlob();
+        saveAs(blob, filename);
+    } catch (error) {
+        console.error('PDF generation error:', error);
+        throw error;
+    }
 }
 
 /**
@@ -110,11 +114,11 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                 new Paragraph({
                     children: [
                         new TextRun({ text: exp.position, bold: true }),
-                        new TextRun({ text: ` | ${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : 'Sekarang'}` }),
+                        new TextRun({ text: ` | ${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : 'Sekarang'} ` }),
                     ],
                 }),
                 new Paragraph({
-                    text: `${exp.company}${exp.location ? ` • ${exp.location}` : ''}`,
+                    text: `${exp.company}${exp.location ? ` • ${exp.location}` : ''} `,
                     spacing: { after: 100 },
                 })
             );
@@ -122,7 +126,7 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
             exp.description.filter(d => d.trim()).forEach((desc) => {
                 children.push(
                     new Paragraph({
-                        text: `• ${desc.replace(/^[-•]\s*/, '')}`,
+                        text: `• ${desc.replace(/^[-•]\s*/, '')} `,
                         spacing: { after: 50 },
                     })
                 );
@@ -146,12 +150,12 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
             children.push(
                 new Paragraph({
                     children: [
-                        new TextRun({ text: `${edu.degree} - ${edu.field}`, bold: true }),
-                        new TextRun({ text: ` | ${formatDate(edu.startDate)} - ${formatDate(edu.endDate)}` }),
+                        new TextRun({ text: `${edu.degree} - ${edu.field} `, bold: true }),
+                        new TextRun({ text: ` | ${formatDate(edu.startDate)} - ${formatDate(edu.endDate)} ` }),
                     ],
                 }),
                 new Paragraph({
-                    text: `${edu.institution}${edu.gpa ? ` • IPK: ${edu.gpa}` : ''}`,
+                    text: `${edu.institution}${edu.gpa ? ` • IPK: ${edu.gpa}` : ''} `,
                     spacing: { after: 100 },
                 })
             );
@@ -215,6 +219,7 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
 
     // Generate and save
     const blob = await Packer.toBlob(doc);
-    const filename = `CV_${personal.fullName.replace(/\s+/g, '_') || 'Document'}.docx`;
+    const { filenamePrefix } = cvData.settings.exportOptions || { filenamePrefix: 'CV' };
+    const filename = `${filenamePrefix}_${personal.fullName.replace(/\s+/g, '_') || 'Document'}.docx`;
     saveAs(blob, filename);
 }

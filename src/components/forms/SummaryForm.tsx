@@ -38,17 +38,17 @@ export function SummaryForm() {
     };
 
     return (
-        <Card className="w-full">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+        <Card className="neo-card w-full">
+            <CardHeader className="border-b-4 border-black dark:border-white bg-yellow-400 p-6 -mt-8 text-black">
+                <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter">
                     <FileText className="h-5 w-5" />
-                    Ringkasan Profesional
+                    Profil Diri
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="font-bold text-black/80">
                     Tulis ringkasan singkat tentang diri Anda, pengalaman, dan tujuan karir
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-6">
                 {/* Target Role */}
                 <div className="space-y-2">
                     <Label htmlFor="targetRole">Posisi yang Dilamar</Label>
@@ -86,28 +86,28 @@ export function SummaryForm() {
                 </div>
 
                 {/* AI Enhancement Button */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 pt-4">
                     <Button
                         type="button"
-                        variant="outline"
+                        variant="default"
                         onClick={handleEnhance}
                         disabled={isEnhancing || !cvData.summary.trim()}
-                        className="w-full gap-2"
+                        className="h-14 border-4 border-black dark:border-white font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all bg-green-400 text-black gap-2"
                     >
                         {isEnhancing ? (
                             <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                                Meningkatkan dengan AI...
+                                <Loader2 className="h-5 w-5 animate-spin" />
+                                MENINGKATKAN...
                             </>
                         ) : (
                             <>
-                                <Sparkles className="h-4 w-4" />
-                                Tingkatkan dengan AI
+                                <Sparkles className="h-5 w-5" />
+                                TINGKATKAN DENGAN AI
                             </>
                         )}
                     </Button>
-                    <p className="text-xs text-center text-muted-foreground">
-                        AI akan membantu menyempurnakan ringkasan Anda agar lebih profesional dan ATS-friendly
+                    <p className="font-mono text-xs font-bold text-center uppercase tracking-tighter">
+                        AI Gemini akan menyulap ringkasanmu jadi gila!
                     </p>
                 </div>
 

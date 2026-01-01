@@ -18,7 +18,9 @@
     "start": "astro dev",
     "format": "oxfmt",
     "lint": "oxlint",
-    "check": "oxlint && oxfmt"
+    "check": "oxlint && oxfmt",
+    "worker:dev": "cd workers && wrangler dev",
+    "worker:deploy": "cd workers && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -26,6 +28,7 @@
     "@fontsource-variable/inter": "^5.2.8",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/space-mono": "^5.2.9",
+    "@react-pdf/renderer": "^4.3.2",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.6",
     "class-variance-authority": "^0.7.1",

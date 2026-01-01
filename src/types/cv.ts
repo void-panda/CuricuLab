@@ -40,10 +40,17 @@ export interface Skill {
     level?: 'beginner' | 'intermediate' | 'advanced' | 'expert';
 }
 
+export interface ExportOptions {
+    margin: 'narrow' | 'normal' | 'wide';
+    pageSize: 'a4' | 'letter';
+    filenamePrefix: string;
+}
+
 export interface CVSettings {
     targetRole: string;
     language: 'id' | 'en';
     template: 'creative-ats-01' | 'creative-ats-02';
+    exportOptions: ExportOptions;
 }
 
 export interface CVData {
@@ -72,6 +79,11 @@ export const defaultCVData: CVData = {
         targetRole: '',
         language: 'id',
         template: 'creative-ats-01',
+        exportOptions: {
+            margin: 'normal',
+            pageSize: 'a4',
+            filenamePrefix: 'CV',
+        },
     },
 };
 

@@ -48,7 +48,19 @@ export function loadCV(): CVData {
             return defaultCVData;
         }
 
-        return wrapper.data;
+        // Merge with defaults to ensure new fields are present
+        return {
+            ...defaultCVData,
+            ...wrapper.data,
+            settings: {
+                ...defaultCVData.settings,
+                ...wrapper.data.settings,
+                exportOptions: {
+                    ...defaultCVData.settings.exportOptions,
+                    ...(wrapper.data.settings?.exportOptions || {}),
+                },
+            },
+        };
     } catch (error) {
         console.error('Failed to load CV data:', error);
         return defaultCVData;

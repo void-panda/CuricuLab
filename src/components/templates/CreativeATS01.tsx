@@ -1,17 +1,11 @@
 // Creative ATS-01 Template - Single Column Modern
 // ATS-friendly design with clean typography and structure
 import type { CVData } from '@/types/cv';
-import { cn } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 
 interface TemplateProps {
     data: CVData;
     className?: string;
-}
-
-function formatDate(dateString: string): string {
-    if (!dateString) return '';
-    const date = new Date(dateString + '-01');
-    return date.toLocaleDateString('id-ID', { month: 'short', year: 'numeric' });
 }
 
 export function CreativeATS01({ data, className }: TemplateProps) {
@@ -55,11 +49,11 @@ export function CreativeATS01({ data, className }: TemplateProps) {
 
             {/* Professional Summary */}
             {summary && (
-                <section className="mb-6">
+                <section className="mb-6 break-inside-avoid">
                     <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
                         RINGKASAN PROFESIONAL
                     </h2>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed font-normal whitespace-pre-wrap">
                         {summary}
                     </p>
                 </section>
@@ -73,20 +67,20 @@ export function CreativeATS01({ data, className }: TemplateProps) {
                     </h2>
                     <div className="space-y-4">
                         {experiences.map((exp) => (
-                            <div key={exp.id}>
+                            <div key={exp.id} className="break-inside-avoid mb-4">
                                 <div className="flex justify-between items-baseline flex-wrap gap-x-4">
                                     <h3 className="font-bold text-gray-900">{exp.position}</h3>
                                     <span className="text-sm text-gray-500">
                                         {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : 'Sekarang'}
                                     </span>
                                 </div>
-                                <div className="text-gray-700 italic">
+                                <div className="text-gray-700 italic font-medium">
                                     {exp.company}{exp.location && ` • ${exp.location}`}
                                 </div>
                                 {exp.description.length > 0 && exp.description[0] && (
                                     <ul className="mt-2 space-y-1 list-disc list-inside text-gray-700">
                                         {exp.description.filter(d => d.trim()).map((desc, idx) => (
-                                            <li key={idx}>{desc.replace(/^[-•]\s*/, '')}</li>
+                                            <li key={idx} className="leading-normal">{desc.replace(/^[-•]\s*/, '')}</li>
                                         ))}
                                     </ul>
                                 )}

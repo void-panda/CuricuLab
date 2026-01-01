@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Wrench, Plus, X, Sparkles, Loader2 } from 'lucide-react';
 import { suggestSkills } from '@/lib/api';
+import { cn } from '@/lib/utils';
 
 const SKILL_CATEGORIES: { value: Skill['category']; label: string }[] = [
     { value: 'technical', label: 'Teknis' },
@@ -119,17 +120,17 @@ export function SkillsForm() {
     }));
 
     return (
-        <Card className="w-full">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Wrench className="h-5 w-5" />
-                    Keahlian
+        <Card className="neo-card w-full mb-8">
+            <CardHeader className="border-b-4 border-black -mt-8 bg-yellow-400 p-6">
+                <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter">
+                    <Wrench className="h-6 w-6 stroke-3" />
+                    KEAHLIAN
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="font-bold">
                     Tambahkan keahlian teknis, soft skill, dan kemampuan bahasa Anda
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-6">
                 {/* Add new skill */}
                 <div className="space-y-4">
                     <div className="flex gap-2">
@@ -143,8 +144,13 @@ export function SkillsForm() {
                                 onKeyDown={handleKeyDown}
                             />
                         </div>
-                        <Button type="button" onClick={handleAddSkill} disabled={!newSkill.trim()}>
-                            <Plus className="h-4 w-4" />
+                        <Button
+                            type="button"
+                            onClick={handleAddSkill}
+                            disabled={!newSkill.trim()}
+                            className="h-10 w-10 border-2 border-black dark:border-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all bg-black dark:bg-white text-white dark:text-black p-0"
+                        >
+                            <Plus className="h-5 w-5" />
                         </Button>
                     </div>
 
@@ -156,9 +162,15 @@ export function SkillsForm() {
                                     <Button
                                         key={cat.value}
                                         type="button"
-                                        variant={category === cat.value ? 'default' : 'outline'}
+                                        variant="default"
                                         size="sm"
                                         onClick={() => setCategory(cat.value)}
+                                        className={cn(
+                                            "h-9 border-2 border-black dark:border-white font-bold uppercase transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_white]",
+                                            category === cat.value
+                                                ? "bg-primary text-white"
+                                                : "bg-white dark:bg-background text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                                        )}
                                     >
                                         {cat.label}
                                     </Button>
@@ -173,9 +185,15 @@ export function SkillsForm() {
                                     <Button
                                         key={lvl.value}
                                         type="button"
-                                        variant={level === lvl.value ? 'default' : 'outline'}
+                                        variant="default"
                                         size="sm"
                                         onClick={() => setLevel(lvl.value)}
+                                        className={cn(
+                                            "h-9 border-2 border-black dark:border-white font-bold uppercase transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_white]",
+                                            level === lvl.value
+                                                ? "bg-black dark:bg-white text-white dark:text-black"
+                                                : "bg-white dark:bg-background text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                                        )}
                                     >
                                         {lvl.label}
                                     </Button>
@@ -213,25 +231,25 @@ export function SkillsForm() {
 
                 {/* AI Suggestions */}
                 <div className="space-y-3 rounded-lg border bg-muted/30 p-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center md:flex-row flex-col justify-between">
                         <h4 className="text-sm font-medium">Saran Skill dari AI</h4>
                         <Button
                             type="button"
-                            variant="outline"
+                            variant="default"
                             size="sm"
                             onClick={handleGetSuggestions}
                             disabled={isLoadingSuggestions}
-                            className="gap-2"
+                            className="h-10 border-2 border-black dark:border-white font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-green-400 text-black gap-2 uppercase"
                         >
                             {isLoadingSuggestions ? (
                                 <>
-                                    <Loader2 className="h-3 w-3 animate-spin" />
-                                    Memuat...
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                    MEMUAT...
                                 </>
                             ) : (
                                 <>
-                                    <Sparkles className="h-3 w-3" />
-                                    Dapatkan Saran
+                                    <Sparkles className="h-4 w-4" />
+                                    DAPATKAN SARAN
                                 </>
                             )}
                         </Button>

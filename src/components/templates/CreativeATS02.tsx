@@ -1,17 +1,11 @@
 // Creative ATS-02 Template - Two Column with Sidebar
 // Creative yet ATS-friendly with sidebar for skills
 import type { CVData } from '@/types/cv';
-import { cn } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 
 interface TemplateProps {
     data: CVData;
     className?: string;
-}
-
-function formatDate(dateString: string): string {
-    if (!dateString) return '';
-    const date = new Date(dateString + '-01');
-    return date.toLocaleDateString('id-ID', { month: 'short', year: 'numeric' });
 }
 
 export function CreativeATS02({ data, className }: TemplateProps) {
@@ -29,7 +23,7 @@ export function CreativeATS02({ data, className }: TemplateProps) {
             className
         )}>
             {/* Header - Full Width */}
-            <header className="bg-gradient-to-r from-slate-800 to-slate-700 text-white p-6 -mx-4 -mt-4 mb-6">
+            <header className="bg-linear-to-r from-primary to-primary/80 p-8 text-primary-foreground">
                 <h1 className="text-3xl font-bold tracking-tight">
                     {personal.fullName || 'Nama Lengkap'}
                 </h1>
@@ -57,12 +51,12 @@ export function CreativeATS02({ data, className }: TemplateProps) {
                 <div className="flex-1">
                     {/* Professional Summary */}
                     {summary && (
-                        <section className="mb-6">
+                        <section className="mb-6 break-inside-avoid">
                             <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2 mb-3">
                                 <span className="w-8 h-0.5 bg-slate-800"></span>
                                 Tentang Saya
                             </h2>
-                            <p className="text-gray-700 leading-relaxed">
+                            <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
                                 {summary}
                             </p>
                         </section>
@@ -77,7 +71,7 @@ export function CreativeATS02({ data, className }: TemplateProps) {
                             </h2>
                             <div className="space-y-4">
                                 {experiences.map((exp) => (
-                                    <div key={exp.id} className="relative pl-4 border-l-2 border-slate-300">
+                                    <div key={exp.id} className="relative pl-4 border-l-2 border-slate-300 break-inside-avoid mb-4">
                                         <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-slate-800" />
                                         <div className="flex justify-between items-baseline flex-wrap gap-x-4">
                                             <h3 className="font-bold text-gray-900">{exp.position}</h3>
@@ -85,13 +79,13 @@ export function CreativeATS02({ data, className }: TemplateProps) {
                                                 {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : 'Sekarang'}
                                             </span>
                                         </div>
-                                        <div className="text-slate-600 font-medium">
+                                        <div className="text-slate-600 font-medium italic">
                                             {exp.company}{exp.location && ` • ${exp.location}`}
                                         </div>
                                         {exp.description.length > 0 && exp.description[0] && (
                                             <ul className="mt-2 space-y-1 list-disc list-inside text-gray-600 text-sm">
                                                 {exp.description.filter(d => d.trim()).map((desc, idx) => (
-                                                    <li key={idx}>{desc.replace(/^[-•]\s*/, '')}</li>
+                                                    <li key={idx} className="leading-normal">{desc.replace(/^[-•]\s*/, '')}</li>
                                                 ))}
                                             </ul>
                                         )}
@@ -110,7 +104,7 @@ export function CreativeATS02({ data, className }: TemplateProps) {
                             </h2>
                             <div className="space-y-3">
                                 {education.map((edu) => (
-                                    <div key={edu.id} className="relative pl-4 border-l-2 border-slate-300">
+                                    <div key={edu.id} className="relative pl-4 border-l-2 border-slate-300 break-inside-avoid">
                                         <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-slate-800" />
                                         <div className="flex justify-between items-baseline flex-wrap gap-x-4">
                                             <h3 className="font-bold text-gray-900">

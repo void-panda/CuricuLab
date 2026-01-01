@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useCVStore } from '@/lib/store';
 import { FormWizard } from '@/components/forms';
 import { TemplateRenderer } from '@/components/templates';
+import { OnboardingModal } from '@/components/OnboardingModal';
 import { exportToPDF, exportToDOCX } from '@/lib/export';
 import { Loader2 } from 'lucide-react';
 
@@ -11,11 +12,16 @@ export function CVBuilder() {
     const cvData = useCVStore((state) => state.cvData);
     const [isExporting, setIsExporting] = useState(false);
     const [exportError, setExportError] = useState<string | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
 
-    // Load saved data on mount
+    // Load saved data and set mounted on mount
     useEffect(() => {
+        setIsMounted(true);
         loadFromStorage();
     }, []);
+
+    // Return null on server to avoid hydration mismatch
+    if (!isMounted) return null;
 
     const handleExportPDF = async () => {
         setIsExporting(true);
@@ -44,35 +50,44 @@ export function CVBuilder() {
     };
 
     return (
-        <div className="flex h-[calc(100vh-var(--header-height)-var(--footer-height))] flex-col lg:flex-row">
-            {/* Form Section */}
-            <div className="flex-1 border-r lg:max-w-xl">
-                <FormWizard />
-            </div>
+        <>
+            {/* Onboarding Flow */}
+            <OnboardingModal />
 
-            {/* Preview Section */}
-            <div className="flex-1 hidden lg:flex lg:flex-col">
-                <TemplateRenderer
-                    onExportPDF={handleExportPDF}
-                    onExportDOCX={handleExportDOCX}
-                    isExporting={isExporting}
-                />
-            </div>
+            <div className="flex h-[calc(100vh-var(--header-height)-var(--footer-height))] flex-col lg:flex-row bg-background">
+                {/* Form Section */}
+                <div className="flex-1 border-r-4 border-black lg:max-w-xl bg-white dark:bg-card overflow-hidden transition-colors">
+                    <FormWizard
+                        onExportPDF={handleExportPDF}
+                        onExportDOCX={handleExportDOCX}
+                        isExporting={isExporting}
+                    />
+                </div>
 
-            {/* Mobile Preview Toggle - Show on smaller screens */}
-            <div className="lg:hidden border-t p-4">
-                <p className="text-center text-sm text-muted-foreground">
-                    Gunakan layar lebih besar untuk melihat preview CV secara real-time
-                </p>
+                {/* Preview Section */}
+                <div className="flex-1 hidden lg:flex lg:flex-col bg-[#f0f0f0] dark:bg-muted/50 overflow-hidden transition-colors">
+                    <TemplateRenderer
+                        onExportPDF={handleExportPDF}
+                        onExportDOCX={handleExportDOCX}
+                        isExporting={isExporting}
+                    />
+                </div>
+
+                {/* Mobile Preview Toggle - Show on smaller screens */}
+                <div className="lg:hidden border-t-4 border-black bg-yellow-400 dark:bg-yellow-500 p-6 flex flex-col items-center gap-4">
+                    <p className="text-center font-black uppercase tracking-tight text-black">
+                        Pakai laptop/desktop buat liat preview CV-mu secara LIVE! 🚀
+                    </p>
+                </div>
             </div>
 
             {/* Export Error Toast */}
             {exportError && (
-                <div className="fixed bottom-4 right-4 rounded-lg bg-destructive p-4 text-destructive-foreground shadow-lg">
-                    {exportError}
+                <div className="fixed bottom-6 left-6 right-6 z-110 border-4 border-black bg-red-400 p-4 font-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in slide-in-from-bottom duration-300 flex items-center justify-between">
+                    <span>{exportError}</span>
                     <button
                         onClick={() => setExportError(null)}
-                        className="ml-2 underline"
+                        className="bg-black text-white px-3 py-1 text-xs uppercase"
                     >
                         Tutup
                     </button>
@@ -81,13 +96,13 @@ export function CVBuilder() {
 
             {/* Exporting Overlay */}
             {isExporting && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-                    <div className="flex items-center gap-3 rounded-lg bg-card p-6 shadow-lg">
-                        <Loader2 className="h-6 w-6 animate-spin" />
-                        <span>Mengexport CV...</span>
+                <div className="fixed inset-0 z-120 flex items-center justify-center bg-white/40 backdrop-blur-md">
+                    <div className="flex flex-col items-center gap-6 border-8 border-black bg-white p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+                        <Loader2 className="h-16 w-16 animate-spin text-primary stroke-3" />
+                        <span className="text-2xl font-black uppercase tracking-widest text-black">SEDANG EXPORT...</span>
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 }

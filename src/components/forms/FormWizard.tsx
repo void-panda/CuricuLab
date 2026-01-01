@@ -7,7 +7,7 @@ import { SummaryForm } from './SummaryForm';
 import { ExperienceForm } from './ExperienceForm';
 import { EducationForm } from './EducationForm';
 import { SkillsForm } from './SkillsForm';
-import { ChevronLeft, ChevronRight, Check, Eye } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Eye, FileDown, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Step indicator component
@@ -36,26 +36,26 @@ function StepIndicator({
                         onClick={() => isClickable && onStepClick(step)}
                         disabled={!isClickable}
                         className={cn(
-                            "flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-all",
-                            isCurrent && "bg-primary text-primary-foreground",
-                            isCompleted && "bg-primary/20 text-primary hover:bg-primary/30",
-                            !isCurrent && !isCompleted && "bg-muted text-muted-foreground",
-                            isClickable && !isCurrent && "cursor-pointer",
+                            "flex items-center gap-2 border-2 border-black dark:border-white px-4 py-2 text-sm font-bold transition-all",
+                            isCurrent && "bg-primary text-primary-foreground shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_white]",
+                            isCompleted && "bg-primary/20 text-black dark:text-white border-black/40 dark:border-white/40",
+                            !isCurrent && !isCompleted && "bg-white dark:bg-background text-black/40 dark:text-white/40 border-black/20 dark:border-white/20",
+                            isClickable && !isCurrent && "cursor-pointer hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[1px_1px_0px_0px_white]",
                             !isClickable && "cursor-not-allowed opacity-50"
                         )}
                     >
                         <span className={cn(
-                            "flex h-6 w-6 items-center justify-center rounded-full text-xs",
-                            isCurrent && "bg-primary-foreground/20",
-                            isCompleted && "bg-primary"
+                            "flex h-6 w-6 items-center justify-center border-2 border-black dark:border-white font-mono text-xs",
+                            isCurrent && "bg-white dark:bg-black text-black dark:text-white",
+                            isCompleted && "bg-black dark:bg-white text-white dark:text-black"
                         )}>
                             {isCompleted ? (
-                                <Check className="h-3 w-3 text-primary-foreground" />
+                                <Check className="h-3 w-3" />
                             ) : (
                                 index + 1
                             )}
                         </span>
-                        <span className="hidden sm:inline">{WIZARD_STEP_LABELS[step]}</span>
+                        <span className="hidden sm:inline uppercase tracking-tighter">{WIZARD_STEP_LABELS[step]}</span>
                     </button>
                 );
             })}
@@ -64,7 +64,17 @@ function StepIndicator({
 }
 
 // Render the current step's form
-function StepContent({ step }: { step: WizardStep }) {
+function StepContent({
+    step,
+    onExportPDF,
+    onExportDOCX,
+    isExporting
+}: {
+    step: WizardStep;
+    onExportPDF?: () => void;
+    onExportDOCX?: () => void;
+    isExporting: boolean;
+}) {
     switch (step) {
         case 'personal':
             return <PersonalInfoForm />;
@@ -78,11 +88,41 @@ function StepContent({ step }: { step: WizardStep }) {
             return <SkillsForm />;
         case 'preview':
             return (
-                <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
-                    <Eye className="h-16 w-16 text-muted-foreground/50" />
-                    <h2 className="text-2xl font-bold">Preview CV Anda</h2>
-                    <p className="text-muted-foreground">
-                        Lihat preview CV di sebelah kanan dan export ke PDF atau DOCX
+                <div className="flex flex-col items-center justify-center gap-6 py-8 text-center sm:py-12">
+                    <div className="rounded-full bg-primary/10 p-6 dark:bg-primary/20">
+                        <Eye className="h-16 w-16 text-primary" />
+                    </div>
+                    <div className="space-y-2">
+                        <h2 className="text-2xl font-black uppercase tracking-tight text-black dark:text-white">SIAP DIKIRIM? 🚀</h2>
+                        <p className="text-muted-foreground max-w-sm px-4">
+                            Cek kembali data Anda. Jika sudah oke, silakan download CV Anda di bawah ini.
+                        </p>
+                    </div>
+
+                    {/* Mobile Export Buttons - Hidden on Desktop as TemplateRenderer shows them */}
+                    <div className="flex flex-col gap-4 w-full px-4 lg:hidden">
+                        <Button
+                            type="button"
+                            onClick={onExportPDF}
+                            disabled={isExporting}
+                            className="h-14 border-4 border-black px-8 font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_white] active:translate-x-px active:translate-y-px active:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all bg-green-400 text-black gap-2"
+                        >
+                            <FileDown className="h-6 w-6 stroke-3" />
+                            DOWNLOAD PDF
+                        </Button>
+                        <Button
+                            type="button"
+                            onClick={onExportDOCX}
+                            disabled={isExporting}
+                            className="h-14 border-4 border-black px-8 font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_white] active:translate-x-px active:translate-y-px active:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all bg-blue-400 text-white gap-2"
+                        >
+                            <FileText className="h-6 w-6 stroke-3" />
+                            DOWNLOAD DOCX
+                        </Button>
+                    </div>
+
+                    <p className="text-sm font-medium text-muted-foreground hidden lg:block">
+                        Lihat preview CV di sebelah kanan dan gunakan tombol export di bawah preview.
                     </p>
                 </div>
             );
@@ -91,16 +131,26 @@ function StepContent({ step }: { step: WizardStep }) {
     }
 }
 
-export function FormWizard() {
+interface FormWizardProps {
+    onExportPDF?: () => void;
+    onExportDOCX?: () => void;
+    isExporting?: boolean;
+}
+
+export function FormWizard({
+    onExportPDF,
+    onExportDOCX,
+    isExporting = false
+}: FormWizardProps) {
     const { currentStep, setCurrentStep, nextStep, prevStep } = useCVStore();
     const currentIndex = WIZARD_STEPS.indexOf(currentStep);
     const isFirstStep = currentIndex === 0;
     const isLastStep = currentIndex === WIZARD_STEPS.length - 1;
 
     return (
-        <div className="flex h-full flex-col">
+        <div className="flex h-full flex-col bg-white dark:bg-card transition-colors">
             {/* Step Indicator */}
-            <div className="border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="border-b-4 border-black bg-white dark:bg-card p-4 transition-colors">
                 <StepIndicator
                     steps={WIZARD_STEPS}
                     currentStep={currentStep}
@@ -109,37 +159,45 @@ export function FormWizard() {
             </div>
 
             {/* Form Content */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-white dark:bg-card transition-colors">
                 <div className="mx-auto max-w-2xl">
-                    <StepContent step={currentStep} />
+                    <StepContent
+                        step={currentStep}
+                        onExportPDF={onExportPDF}
+                        onExportDOCX={onExportDOCX}
+                        isExporting={isExporting}
+                    />
                 </div>
             </div>
 
             {/* Navigation */}
-            <div className="border-t bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="border-t-4 border-black bg-white dark:bg-card p-6 transition-colors">
                 <div className="mx-auto flex max-w-2xl items-center justify-between">
                     <Button
                         type="button"
                         variant="outline"
                         onClick={prevStep}
                         disabled={isFirstStep}
-                        className="gap-2"
+                        className="h-12 border-2 border-black dark:border-white px-6 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all gap-2 dark:bg-background"
                     >
                         <ChevronLeft className="h-4 w-4" />
-                        Sebelumnya
+                        PREVIOUS
                     </Button>
 
-                    <span className="text-sm text-muted-foreground">
-                        Langkah {currentIndex + 1} dari {WIZARD_STEPS.length}
+                    <span className="font-mono text-sm font-bold uppercase tracking-widest hidden sm:inline text-black dark:text-white">
+                        STEP {currentIndex + 1}/{WIZARD_STEPS.length}
                     </span>
 
                     <Button
                         type="button"
                         onClick={nextStep}
                         disabled={isLastStep}
-                        className="gap-2"
+                        className={cn(
+                            "h-12 border-2 border-black dark:border-white px-8 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-primary text-white gap-2 uppercase",
+                            isLastStep && "opacity-50 cursor-not-allowed"
+                        )}
                     >
-                        {isLastStep ? 'Selesai' : 'Selanjutnya'}
+                        {isLastStep ? 'FINISH' : 'NEXT'}
                         {!isLastStep && <ChevronRight className="h-4 w-4" />}
                     </Button>
                 </div>

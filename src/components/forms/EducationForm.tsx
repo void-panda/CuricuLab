@@ -18,7 +18,7 @@ function EducationItem({
     onRemove: () => void;
 }) {
     return (
-        <div className="space-y-4 rounded-lg border bg-card p-4">
+        <div className="space-y-4 border-2 border-black dark:border-white bg-white dark:bg-card p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] transition-all">
             <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2 text-muted-foreground">
                     <GripVertical className="h-4 w-4 cursor-grab" />
@@ -77,6 +77,7 @@ function EducationItem({
                     <Input
                         id={`eduStartDate-${education.id}`}
                         type="month"
+                        placeholder="YYYY-MM"
                         value={education.startDate}
                         onChange={(e) => onUpdate({ startDate: e.target.value })}
                     />
@@ -88,6 +89,7 @@ function EducationItem({
                     <Input
                         id={`eduEndDate-${education.id}`}
                         type="month"
+                        placeholder="YYYY-MM"
                         value={education.endDate}
                         onChange={(e) => onUpdate({ endDate: e.target.value })}
                     />
@@ -127,17 +129,17 @@ export function EducationForm() {
     const { cvData, addEducation, updateEducation, removeEducation } = useCVStore();
 
     return (
-        <Card className="w-full">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <GraduationCap className="h-5 w-5" />
-                    Riwayat Pendidikan
+        <Card className="neo-card w-full mb-8">
+            <CardHeader className="border-b-4 border-black -mt-8 bg-yellow-400 p-6">
+                <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter">
+                    <GraduationCap className="h-6 w-6 stroke-3" />
+                    RIWAYAT PENDIDIKAN
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="font-bold">
                     Tambahkan riwayat pendidikan Anda, mulai dari yang tertinggi
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6 p-6">
                 {cvData.education.length === 0 ? (
                     <div className="rounded-lg border-2 border-dashed p-8 text-center">
                         <GraduationCap className="mx-auto h-12 w-12 text-muted-foreground/50" />
@@ -161,12 +163,12 @@ export function EducationForm() {
 
                 <Button
                     type="button"
-                    variant="outline"
+                    variant="default"
                     onClick={addEducation}
-                    className="w-full gap-2"
+                    className="h-12 w-full border-2 border-black dark:border-white font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-yellow-400 text-black gap-2 uppercase"
                 >
-                    <Plus className="h-4 w-4" />
-                    Tambah Pendidikan
+                    <Plus className="h-5 w-5" />
+                    TAMBAH PENDIDIKAN
                 </Button>
             </CardContent>
         </Card>
