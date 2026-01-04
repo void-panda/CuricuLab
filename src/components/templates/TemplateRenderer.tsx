@@ -138,8 +138,8 @@ export function TemplateRenderer({
             )}
 
             {/* CV Preview */}
-            <div className="flex-1 overflow-y-auto p-8 md:p-24 flex justify-center items-start bg-[#f0f0f0] dark:bg-muted/50 transition-colors">
-                <div className="border-8 border-black dark:border-white bg-black dark:bg-white shadow-[16px_16px_0px_0px_rgba(0,0,0,0.2)]">
+            <div className="flex-1 overflow-y-auto p-8 md:p-24 flex justify-center items-start bg-[#f0f0f0] dark:bg-muted/10 transition-colors">
+                <div className="border-8 border-black dark:border-white/10 bg-black dark:bg-white/10 shadow-[16px_16px_0px_0px_rgba(0,0,0,0.2)] dark:shadow-[16px_16px_0px_0px_rgba(255,255,255,0.05)]">
                     <div
                         id="cv-preview"
                         className="bg-white p-12"

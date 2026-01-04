@@ -74,7 +74,7 @@ export function CVBuilder() {
                 </div>
 
                 {/* Mobile Preview Toggle - Show on smaller screens */}
-                <div className="lg:hidden border-t-4 border-black bg-yellow-400 dark:bg-yellow-500 p-6 flex flex-col items-center gap-4">
+                <div className="lg:hidden border-t-4 border-black dark:border-white/10 bg-yellow-400 dark:bg-yellow-500 p-6 flex flex-col items-center gap-4">
                     <p className="text-center font-black uppercase tracking-tight text-black">
                         Pakai laptop/desktop buat liat preview CV-mu secara LIVE! 🚀
                     </p>
@@ -96,10 +96,10 @@ export function CVBuilder() {
 
             {/* Exporting Overlay */}
             {isExporting && (
-                <div className="fixed inset-0 z-120 flex items-center justify-center bg-white/40 backdrop-blur-md">
-                    <div className="flex flex-col items-center gap-6 border-8 border-black bg-white p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+                <div className="fixed inset-0 z-120 flex items-center justify-center bg-white/40 dark:bg-black/60 backdrop-blur-md">
+                    <div className="flex flex-col items-center gap-6 border-8 border-black dark:border-white/10 bg-white dark:bg-zinc-900 p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,0.1)]">
                         <Loader2 className="h-16 w-16 animate-spin text-primary stroke-3" />
-                        <span className="text-2xl font-black uppercase tracking-widest text-black">SEDANG EXPORT...</span>
+                        <span className="text-2xl font-black uppercase tracking-widest text-black dark:text-white">SEDANG EXPORT...</span>
                     </div>
                 </div>
             )}

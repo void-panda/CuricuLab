@@ -87,7 +87,7 @@ export function TemplateChoiceForm() {
     return (
         <div className="space-y-8 max-w-4xl mx-auto py-4">
             <div className="text-center space-y-3 mb-10">
-                <div className="inline-block bg-yellow-400 border-4 border-black px-4 py-1 mb-4 rotate-1">
+                <div className="inline-block bg-yellow-400 border-4 border-black dark:border-white/20 px-4 py-1 mb-4 rotate-1 shadow-[4px_4px_0_0_#000] dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.1)]">
                     <span className="text-xs font-black uppercase tracking-widest text-black">LANGKAH 1 DARI 6</span>
                 </div>
                 <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-black dark:text-white leading-none">
@@ -101,7 +101,7 @@ export function TemplateChoiceForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2">
                 {/* Formal Template */}
                 <div className="group relative">
-                    <div className="absolute inset-0 bg-black translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+                    <div className="absolute inset-0 bg-black dark:bg-white/10 translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
                     <Card
                         className={cn(
                             "relative neo-card cursor-pointer transition-all bg-white dark:bg-zinc-900 border-4 border-black p-0 overflow-hidden h-full flex flex-col",
@@ -109,14 +109,14 @@ export function TemplateChoiceForm() {
                         )}
                         onClick={() => handleSelectTemplate('creative-ats-01')}
                     >
-                        <div className="h-32 bg-blue-400 border-b-4 border-black flex items-center justify-center relative overflow-hidden">
+                        <div className="h-32 bg-blue-400 border-b-4 border-black dark:border-white/10 flex items-center justify-center relative overflow-hidden">
                             <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                             <FileText className="h-16 w-16 text-black relative z-10 stroke-[2.5]" />
                             <div className="absolute top-4 right-4 bg-black text-white text-[10px] font-black px-2 py-1 uppercase tracking-tighter">
                                 ATS SCORE 100
                             </div>
                         </div>
-                        <CardHeader className="p-6 flex-grow">
+                        <CardHeader className="p-6 grow">
                             <CardTitle className="text-2xl text-black dark:text-white font-black uppercase tracking-tighter mb-2">
                                 ATS Formal
                             </CardTitle>
@@ -134,7 +134,7 @@ export function TemplateChoiceForm() {
 
                 {/* Creative Template */}
                 <div className="group relative">
-                    <div className="absolute inset-0 bg-black translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+                    <div className="absolute inset-0 bg-black dark:bg-white/10 translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
                     <Card
                         className={cn(
                             "relative neo-card cursor-pointer transition-all bg-white dark:bg-zinc-900 border-4 border-black p-0 overflow-hidden h-full flex flex-col",
@@ -142,14 +142,14 @@ export function TemplateChoiceForm() {
                         )}
                         onClick={() => handleSelectTemplate('creative-ats-02')}
                     >
-                        <div className="h-32 bg-purple-400 border-b-4 border-black flex items-center justify-center relative overflow-hidden">
+                        <div className="h-32 bg-purple-400 border-b-4 border-black dark:border-white/10 flex items-center justify-center relative overflow-hidden">
                             <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                             <Palette className="h-16 w-16 text-black relative z-10 stroke-[2.5]" />
                             <div className="absolute top-4 right-4 bg-black text-white text-[10px] font-black px-2 py-1 uppercase tracking-tighter">
                                 RECOMMENDED
                             </div>
                         </div>
-                        <CardHeader className="p-6 flex-grow">
+                        <CardHeader className="p-6 grow">
                             <CardTitle className="text-2xl text-black dark:text-white font-black uppercase tracking-tighter mb-2">
                                 Modern Creative
                             </CardTitle>
@@ -179,7 +179,7 @@ export function TemplateChoiceForm() {
                             "transition-colors p-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left",
                             uploadSuccess ? "bg-green-400" : (uploadError ? "bg-red-400" : "bg-orange-400")
                         )}>
-                            <div className="flex-shrink-0 bg-black border-4 border-white p-6 -rotate-3 group-hover:rotate-0 transition-transform">
+                            <div className="shrink-0 bg-black dark:bg-zinc-800 border-4 border-white p-6 -rotate-3 group-hover:rotate-0 transition-transform shadow-[4px_4px_0_0_#fff]">
                                 {isUploading ? (
                                     <Loader2 className="h-20 w-20 text-white animate-spin" />
                                 ) : uploadSuccess ? (
@@ -187,15 +187,15 @@ export function TemplateChoiceForm() {
                                 ) : uploadError ? (
                                     <AlertCircle className="h-20 w-20 text-white" />
                                 ) : (
-                                    <Upload className="h-20 w-20 text-white stroke-[3]" />
+                                    <Upload className="h-20 w-20 text-white stroke-3" />
                                 )}
                             </div>
 
-                            <div className="flex-grow space-y-4">
+                            <div className="grow space-y-4">
                                 <div className="inline-block bg-black text-white text-[12px] font-black px-3 py-1 rounded-full uppercase tracking-widest animate-pulse border-2 border-white">
                                     PALING CEPAT ⚡
                                 </div>
-                                <CardTitle className="text-3xl md:text-4xl text-black font-black uppercase tracking-tighter leading-none">
+                                <CardTitle className="text-3xl md:text-4xl text-black font-black uppercase tracking-tighter leading-none grow">
                                     {isUploading ? 'SEDANG MENULIS ULANG...' : uploadSuccess ? 'IMPORT BERHASIL!' : 'IMPORT DENGAN AI MAGIC'}
                                 </CardTitle>
                                 <CardDescription className="text-black text-lg font-black max-w-2xl leading-tight">
@@ -204,10 +204,10 @@ export function TemplateChoiceForm() {
 
                                 {!isUploading && !uploadSuccess && (
                                     <div className="flex flex-wrap gap-2 pt-2 justify-center md:justify-start">
-                                        <div className="flex items-center gap-1 bg-white/40 px-3 py-1 border-2 border-black rounded shadow-[2px_2px_0_0_#000]">
+                                        <div className="flex items-center gap-1 bg-white/40 px-3 py-1 border-2 border-black dark:border-white/20 rounded shadow-[2px_2px_0_0_#000]">
                                             <span className="text-sm font-black">PDF</span>
                                         </div>
-                                        <div className="flex items-center gap-1 bg-white/40 px-3 py-1 border-2 border-black rounded shadow-[2px_2px_0_0_#000]">
+                                        <div className="flex items-center gap-1 bg-white/40 px-3 py-1 border-2 border-black dark:border-white/20 rounded shadow-[2px_2px_0_0_#000]">
                                             <span className="text-sm font-black">DOCX</span>
                                         </div>
                                     </div>

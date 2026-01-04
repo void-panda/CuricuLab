@@ -192,8 +192,8 @@ export function CertificationForm() {
     };
 
     return (
-        <Card className="neo-card w-full mb-8">
-            <CardHeader className="border-b-4 border-black -mt-8 bg-primary p-6">
+        <Card className="neo-card w-full mb-8 dark:bg-zinc-900 dark:border-white/10 dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
+            <CardHeader className="border-b-4 border-black dark:border-white/10 -mt-8 bg-primary p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                 <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase text-black tracking-tighter">
                     <Award className="h-6 w-6 stroke-3" />
                     Sertifikasi & Penghargaan
@@ -239,7 +239,7 @@ export function CertificationForm() {
                     type="button"
                     variant="default"
                     onClick={addCertification}
-                    className="h-12 w-full border-2 border-black dark:border-white font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-purple-400 text-black gap-2 uppercase"
+                    className="h-12 w-full border-2 border-black dark:border-white font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[2px_2px_0px_0px_white] transition-all bg-purple-400 text-black gap-2 uppercase"
                 >
                     <Plus className="h-5 w-5" />
                     TAMBAH SERTIFIKASI

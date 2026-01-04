@@ -14,14 +14,22 @@ function getInitialTheme(): Theme {
 }
 
 export const ThemeToggle: React.FC = () => {
-  const [theme, setTheme] = React.useState<Theme>(getInitialTheme);
+  const [mounted, setMounted] = React.useState(false);
+  const [theme, setTheme] = React.useState<Theme>("light");
 
   React.useEffect(() => {
+    setMounted(true);
+    setTheme(getInitialTheme());
+  }, []);
+
+  React.useEffect(() => {
+    if (!mounted) return;
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
-  }, [theme]);
+  }, [theme, mounted]);
 
   React.useEffect(() => {
+    if (!mounted) return;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
     const listener = () => {
@@ -32,13 +40,13 @@ export const ThemeToggle: React.FC = () => {
 
     media.addEventListener("change", listener);
     return () => media.removeEventListener("change", listener);
-  }, []);
+  }, [mounted]);
 
   const toggleTheme = () => {
     setTheme((t) => (t === "dark" ? "light" : "dark"));
   };
 
-  const isDark = theme === "dark";
+  const isDark = mounted && theme === "dark";
 
   return (
     <Button

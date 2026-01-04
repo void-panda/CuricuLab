@@ -16,8 +16,8 @@ export function PersonalInfoForm() {
     }, []);
 
     return (
-        <Card className="neo-card w-full mb-8">
-            <CardHeader className="border-b-4 border-black dark:border-white -mt-8 bg-blue-400 p-6">
+        <Card className="neo-card w-full mb-8 dark:bg-zinc-900 dark:border-white/10 dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
+            <CardHeader className="border-b-4 border-black dark:border-white/10 -mt-8 bg-blue-400 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                 <CardTitle className="flex items-center gap-2 text-2xl text-black font-black uppercase tracking-tighter">
                     <User className="h-6 w-6 stroke-3" />
                     DATA PRIBADI

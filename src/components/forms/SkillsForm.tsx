@@ -253,8 +253,8 @@ export function SkillsForm() {
     const activeSkill = activeId ? cvData.skills.find(s => s.id === activeId) : null;
 
     return (
-        <Card className="neo-card w-full mb-8">
-            <CardHeader className="border-b-4 border-black -mt-8 bg-purple-400 p-6">
+        <Card className="neo-card w-full mb-8 dark:bg-zinc-900 dark:border-white/10 dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
+            <CardHeader className="border-b-4 border-black dark:border-white/10 -mt-8 bg-purple-400 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                 <CardTitle className="flex items-center gap-2 text-black text-2xl font-black uppercase tracking-tighter">
                     <Wrench className="h-6 w-6 stroke-3" />
                     KEAHLIAN
@@ -281,7 +281,7 @@ export function SkillsForm() {
                             type="button"
                             onClick={handleAddSkill}
                             disabled={!newSkill.trim()}
-                            className="h-10 w-10 border-2 border-black dark:border-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all bg-black dark:bg-white text-white dark:text-black p-0"
+                            className="h-10 w-10 border-2 border-black dark:border-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[1px_1px_0px_0px_white] transition-all bg-black dark:bg-white text-white dark:text-black p-0"
                         >
                             <Plus className="h-5 w-5" />
                         </Button>
@@ -395,7 +395,7 @@ export function SkillsForm() {
                             size="sm"
                             onClick={handleGetSuggestions}
                             disabled={isLoadingSuggestions}
-                            className="h-10 border-2 border-black dark:border-white font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-green-400 text-black gap-2 uppercase"
+                            className="h-10 border-2 border-black dark:border-white font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[2px_2px_0px_0px_white] transition-all bg-green-400 text-black gap-2 uppercase"
                         >
                             {isLoadingSuggestions ? (
                                 <>

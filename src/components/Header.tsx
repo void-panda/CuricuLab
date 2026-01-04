@@ -23,6 +23,12 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="ml-6 hidden items-center gap-4 lg:flex">
             <a
+              href="/#preview"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Preview AI
+            </a>
+            <a
               href="/builder"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -33,6 +39,24 @@ export function Header() {
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               Fitur
+            </a>
+            <a
+              href="/#how-it-works"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Proses
+            </a>
+            <a
+              href="/#templates"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Template
+            </a>
+            <a
+              href="/#testimonials"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Testimoni
             </a>
           </nav>
 

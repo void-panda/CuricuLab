@@ -33,8 +33,8 @@ export function OnboardingModal() {
 
     return (
         <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="neo-card w-full max-w-lg bg-white overflow-hidden animate-in fade-in zoom-in duration-300">
-                <div className={cn("h-32 flex items-center justify-center border-b-4 border-black", currentStep.color)}>
+            <div className="neo-card w-full max-w-lg bg-white dark:bg-zinc-900 overflow-hidden animate-in fade-in zoom-in duration-300">
+                <div className={cn("h-32 flex items-center justify-center border-b-4 border-black dark:border-white/10", currentStep.color)}>
                     <currentStep.icon className="h-16 w-16 text-black stroke-3" />
                 </div>
 
@@ -48,10 +48,10 @@ export function OnboardingModal() {
                         </button>
                     </div>
 
-                    <h2 className="text-3xl font-black uppercase tracking-tighter mb-4 leading-none">
+                    <h2 className="text-3xl font-black uppercase tracking-tighter mb-4 leading-none text-black dark:text-white">
                         {currentStep.title}
                     </h2>
-                    <p className="text-lg font-bold text-black/70 mb-8 leading-tight">
+                    <p className="text-lg font-bold text-black/70 dark:text-white/70 mb-8 leading-tight">
                         {currentStep.description}
                     </p>
 
@@ -60,7 +60,7 @@ export function OnboardingModal() {
                             <Button
                                 variant="outline"
                                 onClick={() => setStep(step - 1)}
-                                className="flex-1 h-14 border-4 border-black font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+                                className="flex-1 h-14 border-4 border-black dark:border-white/10 font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-white dark:bg-zinc-800 text-black dark:text-white"
                             >
                                 BACK
                             </Button>
@@ -68,8 +68,8 @@ export function OnboardingModal() {
                         <Button
                             onClick={nextStep}
                             className={cn(
-                                "flex-1 h-14 border-4 border-black font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-px hover:translate-y-px hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all gap-2",
-                                step === ONBOARDING_STEPS.length - 1 ? "bg-green-400" : "bg-primary text-white"
+                                "flex-1 h-14 border-4 border-black dark:border-white/10 font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.1)] hover:translate-x-px hover:translate-y-px hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all gap-2",
+                                step === ONBOARDING_STEPS.length - 1 ? "bg-green-400 text-black" : "bg-primary text-white"
                             )}
                         >
                             {step === ONBOARDING_STEPS.length - 1 ? "LET'S GO!" : "NEXT"}

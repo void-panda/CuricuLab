@@ -55,6 +55,13 @@ export function MobileNav({ className }: { className?: string }) {
                 Beranda
               </a>
               <a
+                href="/#preview"
+                className="text-2xl font-medium"
+                onClick={() => setOpen(false)}
+              >
+                Preview AI
+              </a>
+              <a
                 href="/builder"
                 className="text-2xl font-medium"
                 onClick={() => setOpen(false)}
@@ -67,6 +74,27 @@ export function MobileNav({ className }: { className?: string }) {
                 onClick={() => setOpen(false)}
               >
                 Fitur
+              </a>
+              <a
+                href="/#how-it-works"
+                className="text-2xl font-medium"
+                onClick={() => setOpen(false)}
+              >
+                Proses
+              </a>
+              <a
+                href="/#templates"
+                className="text-2xl font-medium"
+                onClick={() => setOpen(false)}
+              >
+                Template
+              </a>
+              <a
+                href="/#testimonials"
+                className="text-2xl font-medium"
+                onClick={() => setOpen(false)}
+              >
+                Testimoni
               </a>
             </div>
           </div>

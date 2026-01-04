@@ -40,8 +40,8 @@ export function SummaryForm() {
     };
 
     return (
-        <Card className="neo-card w-full">
-            <CardHeader className="border-b-4 border-black dark:border-white bg-green-400 p-6 -mt-8 text-black">
+        <Card className="neo-card w-full dark:bg-zinc-900 dark:border-white/10 dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
+            <CardHeader className="border-b-4 border-black dark:border-white/10 bg-green-400 p-6 -mt-8 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)]">
                 <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter">
                     <FileText className="h-5 w-5" />
                     Profil Diri
@@ -94,7 +94,7 @@ export function SummaryForm() {
                         variant="default"
                         onClick={handleEnhance}
                         disabled={isEnhancing || !cvData.summary.trim()}
-                        className="h-14 border-4 border-black dark:border-white font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all bg-green-400 text-black gap-2"
+                        className="h-14 border-4 border-black dark:border-white font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_white] transition-all bg-green-400 text-black gap-2"
                     >
                         {isEnhancing ? (
                             <>

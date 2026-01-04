@@ -41,8 +41,8 @@ export function ThemeCustomizer() {
     };
 
     return (
-        <Card className="neo-card w-full mb-6 border-2 border-black">
-            <CardHeader className="bg-muted/20 border-b-2 border-black pb-4">
+        <Card className="neo-card w-full mb-6 border-2 border-black dark:border-white/20">
+            <CardHeader className="bg-muted/20 border-b-2 border-black dark:border-white/10 pb-4">
                 <CardTitle className="flex items-center gap-2 text-xl">
                     <Palette className="h-5 w-5" />
                     Kustomisasi Tema
@@ -63,7 +63,7 @@ export function ThemeCustomizer() {
                                 className={cn(
                                     "h-10 w-10 rounded-full border-2 border-transparent transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2",
                                     color.class,
-                                    theme.primaryColor === color.value && "border-black ring-2 ring-black/20 scale-110 shadow-md"
+                                    theme.primaryColor === color.value && "border-black dark:border-white ring-2 ring-black/20 dark:ring-white/20 scale-110 shadow-md"
                                 )}
                                 title={color.name}
                                 aria-label={`Pilih warna ${color.name}`}
@@ -86,7 +86,7 @@ export function ThemeCustomizer() {
                                 updateTheme('fontHeading', val); // Sync for simplicity for now
                             }}
                         >
-                            <SelectTrigger className="w-full border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                            <SelectTrigger className="w-full border-2 border-black dark:border-white/10 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_white]">
                                 <SelectValue>Pilih Font</SelectValue>
                             </SelectTrigger>
                             <SelectContent>
@@ -109,7 +109,7 @@ export function ThemeCustomizer() {
                             value={theme.spacing}
                             onValueChange={(val) => updateTheme('spacing', val)}
                         >
-                            <SelectTrigger className="w-full border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                            <SelectTrigger className="w-full border-2 border-black dark:border-white/10 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_white]">
                                 <SelectValue>Pilih Spasi</SelectValue>
                             </SelectTrigger>
                             <SelectContent>
