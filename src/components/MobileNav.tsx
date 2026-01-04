@@ -35,52 +35,38 @@ export function MobileNav({ className }: { className?: string }) {
               </div>
               <span className="sr-only">Toggle Menu</span>
             </div>
-            <span className="flex h-8 items-center text-lg leading-none font-medium">Menu</span>
           </Button>
         )}
       />
 
       <PopoverContent
-        className="bg-background/90 no-scrollbar h-(--available-height) w-(--available-width) overflow-y-auto rounded-none border-none p-0 shadow-none backdrop-blur duration-100"
-        align="start"
+        className="bg-background/95 h-[calc(100vh-var(--header-height))] w-screen overflow-y-auto border-t p-0 shadow-xl backdrop-blur-sm animate-in slide-in-from-top-2 duration-200"
+        align="end"
         side="bottom"
-        alignOffset={-16}
-        sideOffset={12}
+        alignOffset={0}
+        sideOffset={0}
       >
-        <div className="flex flex-col gap-12 overflow-auto px-6 py-6">
+        <div className="flex flex-col gap-8 p-8">
           <div className="flex flex-col gap-4">
             <div className="text-muted-foreground text-sm font-medium">Menu</div>
 
             <div className="flex flex-col gap-3">
-              <a href="#" className="text-2xl font-medium" onClick={() => setOpen(false)}>
-                Home
+              <a href="/" className="text-2xl font-medium" onClick={() => setOpen(false)}>
+                Beranda
               </a>
-
               <a
-                href="https://astro.build"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/builder"
+                className="text-2xl font-medium"
                 onClick={() => setOpen(false)}
-                className="text-2xl font-medium"
               >
-                Astro
+                Buat CV
               </a>
               <a
-                href="https://tailwindcss.com"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/#features"
                 className="text-2xl font-medium"
-              >
-                Tailwind CSS
-              </a>
-              <a
-                href="https://ui.shadcn.com"
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="text-2xl font-medium"
               >
-                shadcn/ui
+                Fitur
               </a>
             </div>
           </div>

@@ -10,14 +10,14 @@ export function Header() {
     <header className="bg-background sticky top-0 z-50 w-full border-b">
       <div className="container-wrapper 3xl:fixed:px-8 px-8">
         <div className="3xl:fixed:container flex h-(--header-height) items-center **:data-[slot=separator]:h-4!">
-          <MobileNav className="flex lg:hidden" />
+
 
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <FileText className="h-4 w-4" />
-            </div>
-            <span className="hidden font-bold sm:inline-block">CuricuLab</span>
+          <a href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
+            <span className="text-xl sm:text-2xl font-black tracking-tighter flex items-center">
+              Curicu<span className="text-primary">Lab</span>
+              <span className="text-primary ml-0.5 animate-pulse">.</span>
+            </span>
           </a>
 
           {/* Desktop Navigation */}
@@ -47,6 +47,7 @@ export function Header() {
             <Separator orientation="vertical" className="my-auto hidden sm:block" />
 
             <ThemeToggle />
+            <MobileNav className="flex lg:hidden" />
           </div>
         </div>
       </div>
