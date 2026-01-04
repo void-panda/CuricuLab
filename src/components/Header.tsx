@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FileText, Sparkles } from "lucide-react";
+import { FileText, Github, Sparkles } from "lucide-react";
 import { MobileNav } from "@/components/MobileNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
@@ -46,6 +46,17 @@ export function Header() {
 
             <Separator orientation="vertical" className="my-auto hidden sm:block" />
 
+            <a
+              href="https://github.com/void-panda"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <Button variant="ghost" size="icon" className="h-9 w-9">
+                <Github className="h-[1.2rem] w-[1.2rem]" />
+                <span className="sr-only">GitHub</span>
+              </Button>
+            </a>
             <ThemeToggle />
             <MobileNav className="flex lg:hidden" />
           </div>
