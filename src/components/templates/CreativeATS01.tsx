@@ -9,22 +9,50 @@ interface TemplateProps {
 }
 
 export function CreativeATS01({ data, className }: TemplateProps) {
-    const { personal, summary, experiences, education, skills } = data;
+    const { personal, summary, experiences, education, skills, certifications, settings } = data;
+    const { theme } = settings;
 
     // Group skills by category
     const technicalSkills = skills.filter(s => s.category === 'technical');
     const softSkills = skills.filter(s => s.category === 'soft');
     const languageSkills = skills.filter(s => s.category === 'language');
 
+    // Dynamic styles based on theme
+    const containerStyle = {
+        '--theme-primary': theme.primaryColor || '#000000',
+    } as React.CSSProperties;
+
+    const headingClass = theme.fontHeading || 'font-sans';
+    const bodyClass = theme.fontBody || 'font-sans';
+
+    // Spacing configuration
+    const spacingClass = {
+        compact: 'space-y-1 mb-3',
+        normal: 'space-y-3 mb-6',
+        relaxed: 'space-y-5 mb-8'
+    }[theme.spacing || 'normal'];
+
+    const sectionTitleClass = cn(
+        "text-lg font-bold border-b border-gray-300 pb-1 mb-3",
+        headingClass
+    );
+
     return (
-        <div className={cn(
-            "bg-white text-gray-900 font-sans text-sm leading-relaxed",
-            "w-full max-w-[210mm] mx-auto print:max-w-none",
-            className
-        )}>
+        <div
+            className={cn(
+                "bg-white text-gray-900 text-sm leading-relaxed",
+                "w-full max-w-[210mm] mx-auto print:max-w-none",
+                bodyClass,
+                className
+            )}
+            style={containerStyle}
+        >
             {/* Header Section */}
-            <header className="border-b-2 border-gray-800 pb-4 mb-6">
-                <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+            <header className="border-b-2 border-[var(--theme-primary)] pb-4 mb-6">
+                <h1
+                    className={cn("text-3xl font-bold tracking-tight", headingClass)}
+                    style={{ color: 'var(--theme-primary)' }}
+                >
                     {personal.fullName || 'Nama Lengkap'}
                 </h1>
 
@@ -49,8 +77,8 @@ export function CreativeATS01({ data, className }: TemplateProps) {
 
             {/* Professional Summary */}
             {summary && (
-                <section className="mb-6 break-inside-avoid">
-                    <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
+                <section className={cn("break-inside-avoid", spacingClass.replace('space-y-', ''))}>
+                    <h2 className={sectionTitleClass} style={{ color: 'var(--theme-primary)', borderColor: 'var(--theme-primary)' }}>
                         RINGKASAN PROFESIONAL
                     </h2>
                     <p className="text-gray-700 leading-relaxed font-normal whitespace-pre-wrap">
@@ -61,11 +89,11 @@ export function CreativeATS01({ data, className }: TemplateProps) {
 
             {/* Experience Section */}
             {experiences.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
+                <section className={cn(spacingClass.replace('space-y-', ''))}>
+                    <h2 className={sectionTitleClass} style={{ color: 'var(--theme-primary)', borderColor: 'var(--theme-primary)' }}>
                         PENGALAMAN KERJA
                     </h2>
-                    <div className="space-y-4">
+                    <div className={spacingClass.split(' ')[0]}>
                         {experiences.map((exp) => (
                             <div key={exp.id} className="break-inside-avoid mb-4">
                                 <div className="flex justify-between items-baseline flex-wrap gap-x-4">
@@ -92,11 +120,11 @@ export function CreativeATS01({ data, className }: TemplateProps) {
 
             {/* Education Section */}
             {education.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
+                <section className={cn(spacingClass.replace('space-y-', ''))}>
+                    <h2 className={sectionTitleClass} style={{ color: 'var(--theme-primary)', borderColor: 'var(--theme-primary)' }}>
                         PENDIDIKAN
                     </h2>
-                    <div className="space-y-3">
+                    <div className={spacingClass.split(' ')[0]}>
                         {education.map((edu) => (
                             <div key={edu.id}>
                                 <div className="flex justify-between items-baseline flex-wrap gap-x-4">
@@ -122,11 +150,11 @@ export function CreativeATS01({ data, className }: TemplateProps) {
 
             {/* Certifications Section */}
             {data.certifications && data.certifications.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
+                <section className={cn(spacingClass.replace('space-y-', ''))}>
+                    <h2 className={sectionTitleClass} style={{ color: 'var(--theme-primary)', borderColor: 'var(--theme-primary)' }}>
                         SERTIFIKASI & PENGHARGAAN
                     </h2>
-                    <div className="space-y-3">
+                    <div className={spacingClass.split(' ')[0]}>
                         {data.certifications.map((cert) => (
                             <div key={cert.id} className="break-inside-avoid">
                                 <div className="flex justify-between items-baseline flex-wrap gap-x-4">
@@ -138,7 +166,7 @@ export function CreativeATS01({ data, className }: TemplateProps) {
                                 <div className="text-gray-700 font-medium">
                                     {cert.issuer}
                                     {cert.url && (
-                                        <a href={cert.url} target="_blank" rel="noopener noreferrer" className="ml-2 text-primary hover:underline font-normal text-sm">
+                                        <a href={cert.url} target="_blank" rel="noopener noreferrer" className="ml-2 text-[var(--theme-primary)] hover:underline font-normal text-sm" style={{ color: 'var(--theme-primary)' }}>
                                             (Lihat Kredensial)
                                         </a>
                                     )}
@@ -154,8 +182,8 @@ export function CreativeATS01({ data, className }: TemplateProps) {
 
             {/* Skills Section */}
             {skills.length > 0 && (
-                <section className="mb-6">
-                    <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
+                <section className={cn(spacingClass.replace('space-y-', ''))}>
+                    <h2 className={sectionTitleClass} style={{ color: 'var(--theme-primary)', borderColor: 'var(--theme-primary)' }}>
                         KEAHLIAN
                     </h2>
                     <div className="space-y-2">

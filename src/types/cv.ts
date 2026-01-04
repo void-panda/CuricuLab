@@ -55,10 +55,20 @@ export interface ExportOptions {
     filenamePrefix: string;
 }
 
+export interface CVTheme {
+    primaryColor: string;
+    secondaryColor: string;
+    accentColor: string;
+    fontHeading: string;
+    fontBody: string;
+    spacing: 'compact' | 'normal' | 'relaxed';
+}
+
 export interface CVSettings {
     targetRole: string;
     language: 'id' | 'en';
     template: 'creative-ats-01' | 'creative-ats-02';
+    theme: CVTheme;
     exportOptions: ExportOptions;
 }
 
@@ -90,6 +100,14 @@ export const defaultCVData: CVData = {
         targetRole: '',
         language: 'id',
         template: 'creative-ats-01',
+        theme: {
+            primaryColor: '#000000',
+            secondaryColor: '#FFFFFF',
+            accentColor: '#3B82F6',
+            fontHeading: 'font-sans',
+            fontBody: 'font-sans',
+            spacing: 'normal',
+        },
         exportOptions: {
             margin: 'normal',
             pageSize: 'a4',

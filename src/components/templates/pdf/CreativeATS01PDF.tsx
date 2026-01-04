@@ -2,126 +2,145 @@ import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/rendere
 import type { CVData } from '@/types/cv';
 import { formatDate } from '@/lib/utils';
 
-// Create styles
-const styles = StyleSheet.create({
-    page: {
-        flexDirection: 'column',
-        backgroundColor: '#FFFFFF',
-        paddingVertical: 45,
-        paddingHorizontal: 40,
-        fontFamily: 'Helvetica',
-        fontSize: 10,
-        lineHeight: 1.6, // Better readability
-        color: '#111827',
-    },
-    header: {
-        borderBottomWidth: 1.5,
-        borderBottomColor: '#111827',
-        paddingBottom: 20,
-        marginBottom: 25,
-    },
-    name: {
-        fontSize: 26,
-        fontWeight: 'bold',
-        color: '#111827',
-    },
-    contactInfo: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 10,
-        gap: 12,
-        color: '#4B5563',
-        fontSize: 9,
-    },
-    section: {
-        marginBottom: 22,
-    },
-    sectionTitle: {
-        fontSize: 12,
-        fontWeight: 'bold',
-        color: '#111827',
-        borderBottomWidth: 1,
-        borderBottomColor: '#E5E7EB',
-        paddingBottom: 4,
-        marginBottom: 12,
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-    },
-    summary: {
-        color: '#374151',
-        fontSize: 9.5,
-        textAlign: 'justify',
-        lineHeight: 1.6,
-    },
-    experienceItem: {
-        marginBottom: 15,
-    },
-    itemHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'baseline',
-        marginBottom: 2,
-    },
-    role: {
-        fontSize: 10.5,
-        fontWeight: 'bold',
-        color: '#111827',
-    },
-    date: {
-        fontSize: 9,
-        color: '#6B7280',
-    },
-    company: {
-        fontSize: 9.5,
-        color: '#374151',
-        fontStyle: 'italic',
-        marginBottom: 5,
-    },
-    bulletPoint: {
-        flexDirection: 'row',
-        marginBottom: 3,
-        paddingLeft: 8,
-    },
-    bulletSymbol: {
-        width: 10,
-        fontSize: 10,
-        color: '#9CA3AF',
-    },
-    bulletText: {
-        flex: 1,
-        color: '#374151',
-        fontSize: 9,
-        lineHeight: 1.4,
-    },
-    educationItem: {
-        marginBottom: 12,
-    },
-    skillSection: {
-        marginBottom: 15,
-    },
-    skillCategory: {
-        flexDirection: 'row',
-        marginBottom: 6,
-    },
-    skillLabel: {
-        fontWeight: 'bold',
-        width: 85,
-        color: '#1F2937',
-        fontSize: 9,
-    },
-    skillList: {
-        flex: 1,
-        color: '#374151',
-        fontSize: 9,
-    },
-});
-
-interface PDFTemplateProps {
-    data: CVData;
-}
-
 export const CreativeATS01PDF = ({ data }: PDFTemplateProps) => {
     const { personal, summary, experiences, education, skills, settings } = data;
+    const { theme } = settings;
+
+    // Font Mapping
+    const fontMap: Record<string, string> = {
+        'font-sans': 'Helvetica',
+        'font-serif': 'Times-Roman',
+        'font-mono': 'Courier'
+    };
+    const headingFont = fontMap[theme.fontHeading || 'font-sans'] || 'Helvetica';
+    const bodyFont = fontMap[theme.fontBody || 'font-sans'] || 'Helvetica';
+
+    // Spacing Multiplier
+    const spacingMultipliers = {
+        compact: 0.7,
+        normal: 1,
+        relaxed: 1.3
+    };
+    const spacingFactor = spacingMultipliers[theme.spacing || 'normal'] || 1;
+
+    // Theme Colors
+    const primaryColor = theme.primaryColor || '#111827'; // Default to dark gray/black if not set
+
+    // Dynamic Styles
+    const styles = StyleSheet.create({
+        page: {
+            flexDirection: 'column',
+            backgroundColor: '#FFFFFF',
+            paddingVertical: 45 * (spacingFactor > 1 ? 1.1 : 1), // Less impact on page padding
+            paddingHorizontal: 40,
+            fontFamily: bodyFont,
+            fontSize: 10,
+            lineHeight: 1.6,
+            color: '#111827',
+        },
+        header: {
+            borderBottomWidth: 1.5,
+            borderBottomColor: primaryColor,
+            paddingBottom: 20 * spacingFactor,
+            marginBottom: 25 * spacingFactor,
+        },
+        name: {
+            fontSize: 26,
+            fontWeight: 'bold',
+            color: primaryColor,
+            fontFamily: headingFont,
+        },
+        contactInfo: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            marginTop: 10 * spacingFactor,
+            gap: 12,
+            color: '#4B5563',
+            fontSize: 9,
+        },
+        section: {
+            marginBottom: 22 * spacingFactor,
+        },
+        sectionTitle: {
+            fontSize: 12,
+            fontWeight: 'bold',
+            color: primaryColor,
+            borderBottomWidth: 1,
+            borderBottomColor: '#E5E7EB',
+            paddingBottom: 4,
+            marginBottom: 12 * spacingFactor,
+            textTransform: 'uppercase',
+            letterSpacing: 0.5,
+            fontFamily: headingFont,
+        },
+        summary: {
+            color: '#374151',
+            fontSize: 9.5,
+            textAlign: 'justify',
+            lineHeight: 1.6,
+        },
+        experienceItem: {
+            marginBottom: 15 * spacingFactor,
+        },
+        itemHeader: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            marginBottom: 2,
+        },
+        role: {
+            fontSize: 10.5,
+            fontWeight: 'bold',
+            color: '#111827',
+        },
+        date: {
+            fontSize: 9,
+            color: '#6B7280',
+        },
+        company: {
+            fontSize: 9.5,
+            color: '#374151',
+            fontStyle: 'italic',
+            marginBottom: 5,
+        },
+        bulletPoint: {
+            flexDirection: 'row',
+            marginBottom: 3 * spacingFactor,
+            paddingLeft: 8,
+        },
+        bulletSymbol: {
+            width: 10,
+            fontSize: 10,
+            color: '#9CA3AF',
+        },
+        bulletText: {
+            flex: 1,
+            color: '#374151',
+            fontSize: 9,
+            lineHeight: 1.4,
+        },
+        educationItem: {
+            marginBottom: 12 * spacingFactor,
+        },
+        skillSection: {
+            marginBottom: 15 * spacingFactor,
+        },
+        skillCategory: {
+            flexDirection: 'row',
+            marginBottom: 6 * spacingFactor,
+        },
+        skillLabel: {
+            fontWeight: 'bold',
+            width: 85,
+            color: '#1F2937',
+            fontSize: 9,
+        },
+        skillList: {
+            flex: 1,
+            color: '#374151',
+            fontSize: 9,
+        },
+    });
 
     const technicalSkills = skills.filter(s => s.category === 'technical').map(s => s.name).join(', ');
     const softSkills = skills.filter(s => s.category === 'soft').map(s => s.name).join(', ');
@@ -132,7 +151,7 @@ export const CreativeATS01PDF = ({ data }: PDFTemplateProps) => {
             <Page size="A4" style={styles.page}>
                 {/* Header */}
                 <View style={[styles.header, { alignItems: 'center' }]}>
-                    <View style={{ marginBottom: 15, alignItems: 'center' }}>
+                    <View style={{ marginBottom: 15 * spacingFactor, alignItems: 'center' }}>
                         <Text style={[styles.name, { textAlign: 'center' }]}>{personal.fullName || 'Nama Lengkap'}</Text>
                         {settings.targetRole && (
                             <Text style={{ fontSize: 13, color: '#4B5563', marginTop: 15, textTransform: 'uppercase', letterSpacing: 1, textAlign: 'center' }}>

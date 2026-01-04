@@ -48,7 +48,26 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
     } = await import('docx');
     const { saveAs } = await import('file-saver');
 
-    const { personal, summary, experiences, education, skills, certifications } = cvData;
+    const { personal, summary, experiences, education, skills, certifications, settings } = cvData;
+    const { theme } = settings;
+
+    // Theme Mappings
+    const primaryColor = (theme.primaryColor || '#111827').replace('#', '');
+
+    const fontMap: Record<string, string> = {
+        'font-sans': 'Arial',
+        'font-serif': 'Times New Roman',
+        'font-mono': 'Courier New'
+    };
+    const headingFont = fontMap[theme.fontHeading || 'font-sans'] || 'Arial';
+    const bodyFont = fontMap[theme.fontBody || 'font-sans'] || 'Arial';
+
+    const spacingMultipliers = {
+        compact: 0.6,
+        normal: 1,
+        relaxed: 1.4
+    };
+    const spacingFactor = spacingMultipliers[theme.spacing || 'normal'] || 1;
 
     // Helper to format date
     const formatDate = (dateString: string): string => {
@@ -65,9 +84,17 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         // Header - Name and Contact
         sections.push(
             new Paragraph({
-                text: personal.fullName || 'Nama Lengkap',
-                heading: HeadingLevel.TITLE,
+                children: [
+                    new TextRun({
+                        text: personal.fullName || 'Nama Lengkap',
+                        bold: true,
+                        size: 32,
+                        font: headingFont,
+                        color: primaryColor,
+                    })
+                ],
                 alignment: AlignmentType.CENTER,
+                spacing: { before: 0, after: 120 * spacingFactor },
             })
         );
 
@@ -82,9 +109,15 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (contactInfo) {
             sections.push(
                 new Paragraph({
-                    text: contactInfo,
+                    children: [
+                        new TextRun({
+                            text: contactInfo,
+                            font: bodyFont,
+                            size: 18,
+                        })
+                    ],
                     alignment: AlignmentType.CENTER,
-                    spacing: { after: 200 },
+                    spacing: { after: 200 * spacingFactor },
                 })
             );
         }
@@ -93,13 +126,26 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (summary) {
             sections.push(
                 new Paragraph({
-                    text: 'RINGKASAN PROFESIONAL',
-                    heading: HeadingLevel.HEADING_1,
-                    spacing: { before: 300, after: 100 },
+                    children: [
+                        new TextRun({
+                            text: 'RINGKASAN PROFESIONAL',
+                            bold: true,
+                            font: headingFont,
+                            color: primaryColor,
+                            size: 24,
+                        })
+                    ],
+                    spacing: { before: 300 * spacingFactor, after: 100 * spacingFactor },
                 }),
                 new Paragraph({
-                    text: summary,
-                    spacing: { after: 200 },
+                    children: [
+                        new TextRun({
+                            text: summary,
+                            font: bodyFont,
+                            size: 20,
+                        })
+                    ],
+                    spacing: { after: 200 * spacingFactor },
                 })
             );
         }
@@ -108,9 +154,16 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (experiences.length > 0) {
             sections.push(
                 new Paragraph({
-                    text: 'PENGALAMAN KERJA',
-                    heading: HeadingLevel.HEADING_1,
-                    spacing: { before: 300, after: 100 },
+                    children: [
+                        new TextRun({
+                            text: 'PENGALAMAN KERJA',
+                            bold: true,
+                            font: headingFont,
+                            color: primaryColor,
+                            size: 24,
+                        })
+                    ],
+                    spacing: { before: 300 * spacingFactor, after: 100 * spacingFactor },
                 })
             );
 
@@ -118,26 +171,40 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                 sections.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: exp.position, bold: true }),
-                            new TextRun({ text: ` | ${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : 'Sekarang'} ` }),
+                            new TextRun({ text: exp.position, bold: true, font: headingFont, size: 21 }),
+                            new TextRun({ text: ` | ${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : 'Sekarang'} `, font: bodyFont, size: 18, italics: true }),
                         ],
                     }),
                     new Paragraph({
-                        text: `${exp.company}${exp.location ? ` • ${exp.location}` : ''} `,
-                        spacing: { after: 100 },
+                        children: [
+                            new TextRun({
+                                text: `${exp.company}${exp.location ? ` • ${exp.location}` : ''} `,
+                                font: bodyFont,
+                                size: 19,
+                                italics: true,
+                                color: '666666'
+                            })
+                        ],
+                        spacing: { after: 100 * spacingFactor },
                     })
                 );
 
                 exp.description.filter(d => d.trim()).forEach((desc) => {
                     sections.push(
                         new Paragraph({
-                            text: `• ${desc.replace(/^[-•]\s*/, '')} `,
-                            spacing: { after: 50 },
+                            children: [
+                                new TextRun({
+                                    text: `• ${desc.replace(/^[-•]\s*/, '')} `,
+                                    font: bodyFont,
+                                    size: 18,
+                                })
+                            ],
+                            spacing: { after: 50 * spacingFactor },
                         })
                     );
                 });
 
-                sections.push(new Paragraph({ text: '', spacing: { after: 100 } }));
+                sections.push(new Paragraph({ text: '', spacing: { after: 100 * spacingFactor } }));
             });
         }
 
@@ -145,9 +212,16 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (education.length > 0) {
             sections.push(
                 new Paragraph({
-                    text: 'PENDIDIKAN',
-                    heading: HeadingLevel.HEADING_1,
-                    spacing: { before: 300, after: 100 },
+                    children: [
+                        new TextRun({
+                            text: 'PENDIDIKAN',
+                            bold: true,
+                            font: headingFont,
+                            color: primaryColor,
+                            size: 24,
+                        })
+                    ],
+                    spacing: { before: 300 * spacingFactor, after: 100 * spacingFactor },
                 })
             );
 
@@ -155,13 +229,21 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                 sections.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: `${edu.degree} - ${edu.field} `, bold: true }),
-                            new TextRun({ text: ` | ${formatDate(edu.startDate)} - ${formatDate(edu.endDate)} ` }),
+                            new TextRun({ text: `${edu.degree} - ${edu.field} `, bold: true, font: headingFont, size: 21 }),
+                            new TextRun({ text: ` | ${formatDate(edu.startDate)} - ${formatDate(edu.endDate)} `, font: bodyFont, size: 18, italics: true }),
                         ],
                     }),
                     new Paragraph({
-                        text: `${edu.institution}${edu.gpa ? ` • IPK: ${edu.gpa}` : ''} `,
-                        spacing: { after: 100 },
+                        children: [
+                            new TextRun({
+                                text: `${edu.institution}${edu.gpa ? ` • IPK: ${edu.gpa}` : ''} `,
+                                font: bodyFont,
+                                size: 19,
+                                italics: true,
+                                color: '666666'
+                            })
+                        ],
+                        spacing: { after: 100 * spacingFactor },
                     })
                 );
             });
@@ -171,9 +253,16 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (certifications && certifications.length > 0) {
             sections.push(
                 new Paragraph({
-                    text: 'SERTIFIKASI & PENGHARGAAN',
-                    heading: HeadingLevel.HEADING_1,
-                    spacing: { before: 300, after: 100 },
+                    children: [
+                        new TextRun({
+                            text: 'SERTIFIKASI & PENGHARGAAN',
+                            bold: true,
+                            font: headingFont,
+                            color: primaryColor,
+                            size: 24,
+                        })
+                    ],
+                    spacing: { before: 300 * spacingFactor, after: 100 * spacingFactor },
                 })
             );
 
@@ -186,21 +275,35 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                 sections.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: cert.name, bold: true }),
-                            new TextRun({ text: ` | ${formatDate(cert.date)}` }),
+                            new TextRun({ text: cert.name, bold: true, font: headingFont, size: 21 }),
+                            new TextRun({ text: ` | ${formatDate(cert.date)}`, font: bodyFont, size: 18, italics: true }),
                         ],
                     }),
                     new Paragraph({
-                        text: certInfo,
-                        spacing: { after: cert.description ? 50 : 100 },
+                        children: [
+                            new TextRun({
+                                text: certInfo,
+                                font: bodyFont,
+                                size: 19,
+                                italics: true,
+                                color: '666666'
+                            })
+                        ],
+                        spacing: { after: cert.description ? 50 * spacingFactor : 100 * spacingFactor },
                     })
                 );
 
                 if (cert.description) {
                     sections.push(
                         new Paragraph({
-                            text: `• ${cert.description}`,
-                            spacing: { after: 100 },
+                            children: [
+                                new TextRun({
+                                    text: `• ${cert.description}`,
+                                    font: bodyFont,
+                                    size: 18,
+                                })
+                            ],
+                            spacing: { after: 100 * spacingFactor },
                         })
                     );
                 }
@@ -211,48 +314,36 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (skills.length > 0) {
             sections.push(
                 new Paragraph({
-                    text: 'KEAHLIAN',
-                    heading: HeadingLevel.HEADING_1,
-                    spacing: { before: 300, after: 100 },
+                    children: [
+                        new TextRun({
+                            text: 'KEAHLIAN',
+                            bold: true,
+                            font: headingFont,
+                            color: primaryColor,
+                            size: 24,
+                        })
+                    ],
+                    spacing: { before: 300 * spacingFactor, after: 100 * spacingFactor },
                 })
             );
 
-            const technicalSkills = skills.filter(s => s.category === 'technical');
-            const softSkills = skills.filter(s => s.category === 'soft');
-            const languageSkills = skills.filter(s => s.category === 'language');
+            const groups = [
+                { label: 'Teknis', items: skills.filter(s => s.category === 'technical') },
+                { label: 'Soft Skills', items: skills.filter(s => s.category === 'soft') },
+                { label: 'Bahasa', items: skills.filter(s => s.category === 'language') }
+            ];
 
-            if (technicalSkills.length > 0) {
+            groups.filter(g => g.items.length > 0).forEach(g => {
                 sections.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: 'Teknis: ', bold: true }),
-                            new TextRun({ text: technicalSkills.map(s => s.name).join(', ') }),
+                            new TextRun({ text: `${g.label}: `, bold: true, font: headingFont, size: 19 }),
+                            new TextRun({ text: g.items.map(s => s.name).join(', '), font: bodyFont, size: 18 }),
                         ],
+                        spacing: { after: 80 * spacingFactor },
                     })
                 );
-            }
-
-            if (softSkills.length > 0) {
-                sections.push(
-                    new Paragraph({
-                        children: [
-                            new TextRun({ text: 'Soft Skills: ', bold: true }),
-                            new TextRun({ text: softSkills.map(s => s.name).join(', ') }),
-                        ],
-                    })
-                );
-            }
-
-            if (languageSkills.length > 0) {
-                sections.push(
-                    new Paragraph({
-                        children: [
-                            new TextRun({ text: 'Bahasa: ', bold: true }),
-                            new TextRun({ text: languageSkills.map(s => s.name).join(', ') }),
-                        ],
-                    })
-                );
-            }
+            });
         }
 
         return sections;
@@ -271,33 +362,61 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                     new TableRow({
                         children: [
                             new TableCell({
-                                shading: { fill: "333333", type: ShadingType.CLEAR, color: "auto" }, // Dark background
+                                shading: { fill: primaryColor, type: ShadingType.CLEAR, color: "auto" },
                                 children: [
                                     new Paragraph({
-                                        text: personal.fullName || 'Nama Lengkap',
-                                        heading: HeadingLevel.TITLE,
+                                        children: [
+                                            new TextRun({
+                                                text: personal.fullName || 'Nama Lengkap',
+                                                bold: true,
+                                                size: 44,
+                                                color: "FFFFFF",
+                                                font: headingFont
+                                            })
+                                        ],
                                         alignment: AlignmentType.LEFT,
-                                        style: "Heading1Inverse" // Custom style we'll define or just manual coloring
                                     }),
                                     new Paragraph({
-                                        text: cvData.settings.targetRole || '',
-                                        heading: HeadingLevel.HEADING_2,
-                                        alignment: AlignmentType.LEFT,
-                                    }),
-                                    new Paragraph({
-                                        text: [
-                                            personal.email ? ` ${personal.email}` : '',
-                                            personal.phone ? ` ${personal.phone}` : '',
-                                            personal.location ? ` ${personal.location}` : ''
-                                        ].filter(Boolean).join(' | '),
+                                        children: [
+                                            new TextRun({
+                                                text: cvData.settings.targetRole || '',
+                                                size: 28,
+                                                color: "FFFFFF",
+                                                font: headingFont,
+                                                bold: true
+                                            })
+                                        ],
                                         alignment: AlignmentType.LEFT,
                                         spacing: { before: 100 }
                                     }),
                                     new Paragraph({
-                                        text: [
-                                            personal.linkedin ? `🔗 ${personal.linkedin}` : '',
-                                            personal.portfolio ? ` ${personal.portfolio}` : ''
-                                        ].filter(Boolean).join(' | '),
+                                        children: [
+                                            new TextRun({
+                                                text: [
+                                                    personal.email ? ` ${personal.email}` : '',
+                                                    personal.phone ? ` ${personal.phone}` : '',
+                                                    personal.location ? ` ${personal.location}` : ''
+                                                ].filter(Boolean).join(' | '),
+                                                color: "FFFFFF",
+                                                font: bodyFont,
+                                                size: 18
+                                            })
+                                        ],
+                                        alignment: AlignmentType.LEFT,
+                                        spacing: { before: 150 }
+                                    }),
+                                    new Paragraph({
+                                        children: [
+                                            new TextRun({
+                                                text: [
+                                                    personal.linkedin ? `🔗 ${personal.linkedin}` : '',
+                                                    personal.portfolio ? ` ${personal.portfolio}` : ''
+                                                ].filter(Boolean).join(' | '),
+                                                color: "FFFFFF",
+                                                font: bodyFont,
+                                                size: 18
+                                            })
+                                        ],
                                         alignment: AlignmentType.LEFT,
                                     })
                                 ],
@@ -307,7 +426,7 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                     })
                 ]
             }),
-            new Paragraph({ text: "", spacing: { after: 200 } }) // Spacer
+            new Paragraph({ text: "", spacing: { after: 200 * spacingFactor } }) // Spacer
         );
 
         // 2. Two Column Layout (Main | Sidebar)
@@ -320,13 +439,16 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (summary) {
             mainContent.push(
                 new Paragraph({
-                    text: 'TENTANG SAYA',
-                    heading: HeadingLevel.HEADING_2,
-                    spacing: { after: 100 },
+                    children: [
+                        new TextRun({ text: 'TENTANG SAYA', bold: true, size: 24, font: headingFont, color: primaryColor })
+                    ],
+                    spacing: { after: 100 * spacingFactor },
                 }),
                 new Paragraph({
-                    text: summary,
-                    spacing: { after: 200 },
+                    children: [
+                        new TextRun({ text: summary, font: bodyFont, size: 19 })
+                    ],
+                    spacing: { after: 200 * spacingFactor },
                 })
             );
         }
@@ -335,33 +457,36 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (experiences.length > 0) {
             mainContent.push(
                 new Paragraph({
-                    text: 'PENGALAMAN KERJA',
-                    heading: HeadingLevel.HEADING_2,
-                    spacing: { before: 200, after: 100 },
+                    children: [
+                        new TextRun({ text: 'PENGALAMAN KERJA', bold: true, size: 24, font: headingFont, color: primaryColor })
+                    ],
+                    spacing: { before: 200 * spacingFactor, after: 100 * spacingFactor },
                 })
             );
             experiences.forEach((exp) => {
                 mainContent.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: exp.position, bold: true, size: 24 }),
+                            new TextRun({ text: exp.position, bold: true, size: 22, font: headingFont }),
                         ],
-                        spacing: { before: 100 }
+                        spacing: { before: 100 * spacingFactor }
                     }),
                     new Paragraph({
                         children: [
-                            new TextRun({ text: exp.company, bold: true, color: "666666" }),
-                            new TextRun({ text: ` | ${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : 'Sekarang'}`, italics: true, size: 20 })
+                            new TextRun({ text: exp.company, bold: true, font: bodyFont, color: "666666", size: 19 }),
+                            new TextRun({ text: ` | ${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : 'Sekarang'}`, italics: true, size: 18, font: bodyFont, color: "666666" })
                         ]
                     }),
                     ...exp.description.filter(d => d.trim()).map(desc =>
                         new Paragraph({
-                            text: `• ${desc.replace(/^[-•]\s*/, '')}`,
-                            spacing: { after: 50 },
+                            children: [
+                                new TextRun({ text: `• ${desc.replace(/^[-•]\s*/, '')}`, font: bodyFont, size: 18 })
+                            ],
+                            spacing: { after: 50 * spacingFactor },
                             indent: { left: 200 }
                         })
                     ),
-                    new Paragraph({ text: "", spacing: { after: 100 } })
+                    new Paragraph({ text: "", spacing: { after: 100 * spacingFactor } })
                 );
             });
         }
@@ -370,25 +495,28 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
         if (education.length > 0) {
             mainContent.push(
                 new Paragraph({
-                    text: 'PENDIDIKAN',
-                    heading: HeadingLevel.HEADING_2,
-                    spacing: { before: 200, after: 100 },
+                    children: [
+                        new TextRun({ text: 'PENDIDIKAN', bold: true, size: 24, font: headingFont, color: primaryColor })
+                    ],
+                    spacing: { before: 200 * spacingFactor, after: 100 * spacingFactor },
                 })
             );
             education.forEach((edu) => {
                 mainContent.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: `${edu.degree} - ${edu.field}`, bold: true }),
+                            new TextRun({ text: `${edu.degree} - ${edu.field}`, bold: true, font: headingFont, size: 21 }),
                         ],
-                        spacing: { before: 100 }
+                        spacing: { before: 100 * spacingFactor }
                     }),
                     new Paragraph({
                         children: [
                             new TextRun({
                                 text: `${edu.institution}${edu.gpa ? ` • IPK: ${edu.gpa}` : ''}`,
                                 bold: true,
-                                color: "666666"
+                                color: "666666",
+                                font: bodyFont,
+                                size: 19
                             })
                         ]
                     }),
@@ -397,101 +525,75 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                             new TextRun({
                                 text: `${formatDate(edu.startDate)} - ${formatDate(edu.endDate)}`,
                                 italics: true,
-                                size: 20
+                                size: 18,
+                                font: bodyFont,
+                                color: "666666"
                             })
                         ],
-                        spacing: { after: 100 }
+                        spacing: { after: 100 * spacingFactor }
                     })
                 );
             });
         }
-
-        // Certifications
-        if (certifications && certifications.length > 0) {
-            mainContent.push(
-                new Paragraph({
-                    text: 'SERTIFIKASI & PENGHARGAAN',
-                    heading: HeadingLevel.HEADING_2,
-                    spacing: { before: 200, after: 100 },
-                })
-            );
-            certifications.forEach((cert) => {
-                mainContent.push(
-                    new Paragraph({
-                        children: [
-                            new TextRun({ text: cert.name, bold: true }),
-                        ],
-                        spacing: { before: 100 }
-                    }),
-                    new Paragraph({
-                        children: [
-                            new TextRun({ text: cert.issuer, bold: true, color: "666666" }),
-                            new TextRun({ text: ` | ${formatDate(cert.date)}`, italics: true, size: 20 })
-                        ]
-                    })
-                );
-
-                if (cert.description) {
-                    mainContent.push(
-                        new Paragraph({
-                            text: `• ${cert.description}`,
-                            spacing: { after: 50 },
-                            indent: { left: 200 }
-                        })
-                    );
-                }
-                mainContent.push(new Paragraph({ text: "", spacing: { after: 50 } }));
-            });
-        }
-
 
         // --- Sidebar Content (Right) ---
         if (skills.length > 0) {
             sidebarContent.push(
                 new Paragraph({
-                    text: 'KEAHLIAN',
-                    heading: HeadingLevel.HEADING_2,
-                    spacing: { after: 100 },
+                    children: [
+                        new TextRun({ text: 'KEAHLIAN', bold: true, size: 24, font: headingFont, color: primaryColor })
+                    ],
+                    spacing: { after: 150 * spacingFactor },
                 })
             );
 
-            const technicalSkills = skills.filter(s => s.category === 'technical');
-            const softSkills = skills.filter(s => s.category === 'soft');
-            const languageSkills = skills.filter(s => s.category === 'language');
+            const groups = [
+                { label: 'Teknis', items: skills.filter(s => s.category === 'technical') },
+                { label: 'Soft Skills', items: skills.filter(s => s.category === 'soft') },
+                { label: 'Bahasa', items: skills.filter(s => s.category === 'language') }
+            ];
 
-            if (technicalSkills.length > 0) {
+            groups.filter(g => g.items.length > 0).forEach(g => {
                 sidebarContent.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: 'Teknis', bold: true })
+                            new TextRun({ text: g.label, bold: true, font: headingFont, size: 19 })
                         ],
-                        spacing: { before: 100 }
+                        spacing: { before: 150 * spacingFactor }
                     }),
-                    new Paragraph({ text: technicalSkills.map(s => s.name).join(', ') })
+                    new Paragraph({
+                        children: [
+                            new TextRun({ text: g.items.map(s => s.name).join(', '), font: bodyFont, size: 18 })
+                        ]
+                    })
                 );
-            }
-            if (softSkills.length > 0) {
+            });
+        }
+
+        if (certifications && certifications.length > 0) {
+            sidebarContent.push(
+                new Paragraph({
+                    children: [
+                        new TextRun({ text: 'SERTIFIKASI', bold: true, size: 24, font: headingFont, color: primaryColor })
+                    ],
+                    spacing: { before: 300 * spacingFactor, after: 150 * spacingFactor },
+                })
+            );
+            certifications.forEach(cert => {
                 sidebarContent.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: 'Soft Skills', bold: true })
+                            new TextRun({ text: cert.name, bold: true, font: headingFont, size: 19 })
                         ],
-                        spacing: { before: 100 }
+                        spacing: { before: 100 * spacingFactor }
                     }),
-                    new Paragraph({ text: softSkills.map(s => s.name).join(', ') })
-                );
-            }
-            if (languageSkills.length > 0) {
-                sidebarContent.push(
                     new Paragraph({
                         children: [
-                            new TextRun({ text: 'Bahasa', bold: true })
-                        ],
-                        spacing: { before: 100 }
-                    }),
-                    new Paragraph({ text: languageSkills.map(s => s.name).join(', ') })
+                            new TextRun({ text: cert.issuer, font: bodyFont, size: 17 })
+                        ]
+                    })
                 );
-            }
+            });
         }
 
 
@@ -529,22 +631,6 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
 
     // Create document
     const doc = new Document({
-        styles: {
-            paragraphStyles: [
-                {
-                    id: "Heading1Inverse",
-                    name: "Heading 1 Inverse",
-                    basedOn: "Normal",
-                    next: "Normal",
-                    quickFormat: true,
-                    run: {
-                        size: 32,
-                        bold: true,
-                        color: "FFFFFF", // White text for header
-                    },
-                },
-            ]
-        },
         sections: [{
             children,
         }],

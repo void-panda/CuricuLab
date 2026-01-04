@@ -174,6 +174,199 @@ interface PDFTemplateProps {
 
 export const CreativeATS02PDF = ({ data }: PDFTemplateProps) => {
     const { personal, summary, experiences, education, skills, settings } = data;
+    const { theme } = settings;
+
+    // Font Mapping
+    const fontMap: Record<string, string> = {
+        'font-sans': 'Helvetica',
+        'font-serif': 'Times-Roman',
+        'font-mono': 'Courier'
+    };
+    const headingFont = fontMap[theme.fontHeading || 'font-sans'] || 'Helvetica';
+    const bodyFont = fontMap[theme.fontBody || 'font-sans'] || 'Helvetica';
+
+    // Spacing Multiplier
+    const spacingMultipliers = {
+        compact: 0.7,
+        normal: 1,
+        relaxed: 1.3
+    };
+    const spacingFactor = spacingMultipliers[theme.spacing || 'normal'] || 1;
+
+    // Theme Colors
+    const primaryColor = theme.primaryColor || '#F97316'; // Default to orange if not set
+
+    // Dynamic Styles
+    const styles = StyleSheet.create({
+        page: {
+            flexDirection: 'column',
+            backgroundColor: '#FFFFFF',
+            fontFamily: bodyFont,
+            fontSize: 10,
+            lineHeight: 1.6,
+            color: '#111827',
+        },
+        header: {
+            backgroundColor: primaryColor,
+            paddingVertical: 35 * spacingFactor,
+            paddingHorizontal: 30,
+            color: '#FFFFFF',
+        },
+        name: {
+            fontSize: 28,
+            fontWeight: 'bold',
+            marginBottom: 2,
+            fontFamily: headingFont,
+        },
+        role: {
+            fontSize: 15,
+            color: '#FFFFFF',
+            opacity: 0.9,
+            marginBottom: 0,
+            textTransform: 'uppercase',
+            letterSpacing: 1,
+            fontFamily: headingFont,
+        },
+        contactRow: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            fontSize: 9,
+            color: '#FFFFFF',
+        },
+        mainLayout: {
+            flexDirection: 'row',
+            flex: 1,
+        },
+        contentColumn: {
+            flex: 1,
+            paddingTop: 30 * spacingFactor,
+            paddingHorizontal: 25,
+            paddingBottom: 40 * spacingFactor,
+        },
+        sidebar: {
+            width: 170,
+            backgroundColor: '#F8FAFC',
+            padding: 25,
+            borderLeftWidth: 1,
+            borderLeftColor: '#E2E8F0',
+        },
+        section: {
+            marginBottom: 25 * spacingFactor,
+        },
+        sectionHeader: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 12 * spacingFactor,
+        },
+        sectionLine: {
+            width: 20,
+            height: 2,
+            backgroundColor: primaryColor,
+            marginRight: 10,
+        },
+        sectionTitle: {
+            fontSize: 12,
+            fontWeight: 'bold',
+            color: '#1E293B',
+            textTransform: 'uppercase',
+            letterSpacing: 0.5,
+            fontFamily: headingFont,
+        },
+        summary: {
+            color: '#374151',
+            fontSize: 9.5,
+            lineHeight: 1.6,
+        },
+        experienceItem: {
+            marginBottom: 15 * spacingFactor,
+            paddingLeft: 12,
+            borderLeftWidth: 1.5,
+            borderLeftColor: primaryColor,
+            opacity: 0.8,
+            marginLeft: 4,
+        },
+        itemHeader: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            marginBottom: 2,
+        },
+        jobTitle: {
+            fontSize: 10.5,
+            fontWeight: 'bold',
+            color: '#111827',
+        },
+        dateTag: {
+            fontSize: 8.5,
+            color: '#64748B',
+        },
+        company: {
+            fontSize: 9,
+            color: '#475569',
+            fontWeight: 'medium',
+            marginBottom: 6,
+        },
+        bulletPoint: {
+            flexDirection: 'row',
+            marginBottom: 3 * spacingFactor,
+        },
+        bulletSymbol: {
+            width: 10,
+            fontSize: 9,
+            color: primaryColor,
+        },
+        bulletText: {
+            flex: 1,
+            color: '#4B5563',
+            fontSize: 9,
+            lineHeight: 1.4,
+        },
+        sidebarTitle: {
+            fontSize: 12,
+            fontWeight: 'bold',
+            color: '#1E293B',
+            marginBottom: 15 * spacingFactor,
+            textTransform: 'uppercase',
+            letterSpacing: 0.5,
+            fontFamily: headingFont,
+        },
+        sidebarSection: {
+            marginBottom: 20 * spacingFactor,
+        },
+        sidebarSubTitle: {
+            fontSize: 8.5,
+            fontWeight: 'bold',
+            color: primaryColor,
+            textTransform: 'uppercase',
+            letterSpacing: 0.5,
+            marginBottom: 8,
+        },
+        skillBadgeContainer: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: 6,
+        },
+        skillBadge: {
+            paddingHorizontal: 8,
+            paddingVertical: 3,
+            backgroundColor: '#F1F5F9',
+            borderRadius: 4,
+            fontSize: 8.5,
+            color: '#334155',
+            borderWidth: 1,
+            borderColor: '#E2E8F0',
+        },
+        skillBadgeSoft: {
+            backgroundColor: '#F0FDF4',
+            borderColor: '#DCFCE7',
+            color: '#166534',
+        },
+        skillBadgeLang: {
+            backgroundColor: '#FAF5FF',
+            borderColor: '#F3E8FF',
+            color: '#6B21A8',
+        },
+    });
 
     const technicalSkills = skills.filter(s => s.category === 'technical');
     const softSkills = skills.filter(s => s.category === 'soft');
@@ -184,7 +377,7 @@ export const CreativeATS02PDF = ({ data }: PDFTemplateProps) => {
             <Page size="A4" style={styles.page}>
                 {/* Header */}
                 <View style={[styles.header, { alignItems: 'center' }]}>
-                    <View style={{ marginBottom: 20, alignItems: 'center' }}>
+                    <View style={{ marginBottom: 20 * spacingFactor, alignItems: 'center' }}>
                         <Text style={[styles.name, { textAlign: 'center' }]}>{personal.fullName || 'Nama Lengkap'}</Text>
                         {settings.targetRole && (
                             <Text style={[styles.role, { marginTop: 15, textAlign: 'center' }]}>

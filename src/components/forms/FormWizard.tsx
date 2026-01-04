@@ -8,6 +8,7 @@ import { ExperienceForm } from './ExperienceForm';
 import { EducationForm } from './EducationForm';
 import { CertificationForm } from './CertificationForm';
 import { SkillsForm } from './SkillsForm';
+import { ThemeCustomizer } from './ThemeCustomizer';
 import { ChevronLeft, ChevronRight, Check, Eye, FileDown, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -137,9 +138,14 @@ function StepContent({
                     </div>
                     <div className="space-y-2">
                         <h2 className="text-2xl font-black uppercase tracking-tight text-black dark:text-white">SIAP DIKIRIM? 🚀</h2>
-                        <p className="text-muted-foreground max-w-sm px-4">
-                            Cek kembali data Anda. Jika sudah oke, silakan download CV Anda di bawah ini.
+                        <p className="text-muted-foreground max-w-sm px-4 mx-auto">
+                            Cek kembali data Anda. Gunakan opsi di bawah untuk menyesuaikan tampilan, lalu download CV Anda.
                         </p>
+                    </div>
+
+                    {/* Theme Customizer */}
+                    <div className="w-full max-w-md px-4 text-left">
+                        <ThemeCustomizer />
                     </div>
 
                     {/* Mobile Export Buttons - Hidden on Desktop as TemplateRenderer shows them */}
