@@ -21,44 +21,84 @@ function StepIndicator({
     onStepClick: (step: WizardStep) => void;
 }) {
     const currentIndex = steps.indexOf(currentStep);
+    const progress = Math.round(((currentIndex + 1) / steps.length) * 100);
 
     return (
-        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2">
-            {steps.map((step, index) => {
-                const isCompleted = index < currentIndex;
-                const isCurrent = step === currentStep;
-                const isClickable = index <= currentIndex + 1;
+        <div className="w-full">
+            {/* Mobile View: Compact Header + Progress Bar */}
+            <div className="flex flex-col gap-3 md:hidden">
+                <div className="flex items-end justify-between">
+                    <div>
+                        <p className="font-mono text-xs font-bold uppercase text-muted-foreground">
+                            Langkah {currentIndex + 1} dari {steps.length}
+                        </p>
+                        <h2 className="mt-1 text-xl font-black uppercase leading-none tracking-tight">
+                            {WIZARD_STEP_LABELS[currentStep]}
+                        </h2>
+                    </div>
+                    <span className="font-mono text-xs font-bold">{progress}%</span>
+                </div>
+                <div className="h-3 w-full border-2 border-black dark:border-white bg-white dark:bg-card p-0.5">
+                    <div
+                        className="h-full bg-primary transition-all duration-300 ease-in-out"
+                        style={{ width: `${progress}%` }}
+                    />
+                </div>
+            </div>
 
-                return (
-                    <button
-                        key={step}
-                        type="button"
-                        onClick={() => isClickable && onStepClick(step)}
-                        disabled={!isClickable}
-                        className={cn(
-                            "flex items-center gap-2 border-2 border-black dark:border-white px-4 py-2 text-sm font-bold transition-all",
-                            isCurrent && "bg-primary text-primary-foreground shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_white]",
-                            isCompleted && "bg-primary/20 text-black dark:text-white border-black/40 dark:border-white/40",
-                            !isCurrent && !isCompleted && "bg-white dark:bg-background text-black/40 dark:text-white/40 border-black/20 dark:border-white/20",
-                            isClickable && !isCurrent && "cursor-pointer hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[1px_1px_0px_0px_white]",
-                            !isClickable && "cursor-not-allowed opacity-50"
-                        )}
-                    >
-                        <span className={cn(
-                            "flex h-6 w-6 items-center justify-center border-2 border-black dark:border-white font-mono text-xs",
-                            isCurrent && "bg-white dark:bg-black text-black dark:text-white",
-                            isCompleted && "bg-black dark:bg-white text-white dark:text-black"
-                        )}>
-                            {isCompleted ? (
-                                <Check className="h-3 w-3" />
-                            ) : (
-                                index + 1
+            {/* Desktop View: Connected Steps */}
+            <div className="hidden md:flex relative items-center justify-between w-full max-w-2xl mx-auto px-4">
+                {/* Connecting Line background */}
+                <div className="absolute top-1/2 left-0 w-full h-3 -translate-y-1/2 border-2 border-black dark:border-white bg-white dark:bg-card -z-10" />
+
+                {/* Connecting Line Progress */}
+                <div
+                    className="absolute top-1/2 left-0 h-3 -translate-y-1/2 border-y-2 border-l-2 border-black dark:border-white bg-primary transition-all duration-300 ease-in-out -z-10"
+                    style={{ width: `${(currentIndex / (steps.length - 1)) * 100}%` }}
+                />
+
+                {steps.map((step, index) => {
+                    const isCompleted = index < currentIndex;
+                    const isCurrent = step === currentStep;
+                    const isClickable = index <= currentIndex + 1;
+
+                    return (
+                        <button
+                            key={step}
+                            type="button"
+                            onClick={() => isClickable && onStepClick(step)}
+                            disabled={!isClickable}
+                            className={cn(
+                                "relative flex flex-col items-center gap-2 group transition-all duration-200 outline-none",
+                                !isClickable && "cursor-not-allowed opacity-50"
                             )}
-                        </span>
-                        <span className="hidden sm:inline uppercase tracking-tighter">{WIZARD_STEP_LABELS[step]}</span>
-                    </button>
-                );
-            })}
+                        >
+                            {/* Step Circle */}
+                            <div className={cn(
+                                "flex h-10 w-10 items-center justify-center border-2 border-black dark:border-white font-mono text-sm font-bold transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_white]",
+                                isCurrent && "bg-white dark:bg-black text-black dark:text-white scale-110 -translate-y-1 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] dark:shadow-[5px_5px_0px_0px_white]",
+                                isCompleted && "bg-black dark:bg-white text-white dark:text-black",
+                                !isCurrent && !isCompleted && "bg-white dark:bg-card text-muted-foreground",
+                                isClickable && !isCurrent && "group-hover:-translate-y-0.5 group-hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:group-hover:shadow-[4px_4px_0px_0px_white]"
+                            )}>
+                                {isCompleted ? (
+                                    <Check className="h-5 w-5" />
+                                ) : (
+                                    index + 1
+                                )}
+                            </div>
+
+                            {/* Step Label (Bottom) */}
+                            <span className={cn(
+                                "absolute top-12 whitespace-nowrap text-xs font-bold uppercase tracking-tight bg-white dark:bg-card px-1 border-black dark:border-white transition-all",
+                                isCurrent ? "opacity-100 translate-y-0 border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_white] py-0.5 rounded-sm z-20" : "opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
+                            )}>
+                                {WIZARD_STEP_LABELS[step]}
+                            </span>
+                        </button>
+                    );
+                })}
+            </div>
         </div>
     );
 }
