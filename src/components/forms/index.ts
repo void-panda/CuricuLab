@@ -5,4 +5,5 @@ export { ExperienceForm } from './ExperienceForm';
 export { EducationForm } from './EducationForm';
 export { SkillsForm } from './SkillsForm';
 export { CertificationForm } from './CertificationForm';
+export { TemplateChoiceForm } from './TemplateChoiceForm';
 export { FormWizard } from './FormWizard';

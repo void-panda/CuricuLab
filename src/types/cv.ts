@@ -118,6 +118,7 @@ export const defaultCVData: CVData = {
 
 // Wizard step type
 export type WizardStep =
+    | 'template'
     | 'personal'
     | 'summary'
     | 'experience'
@@ -127,6 +128,7 @@ export type WizardStep =
     | 'preview';
 
 export const WIZARD_STEPS: WizardStep[] = [
+    'template',
     'personal',
     'summary',
     'experience',
@@ -137,6 +139,7 @@ export const WIZARD_STEPS: WizardStep[] = [
 ];
 
 export const WIZARD_STEP_LABELS: Record<WizardStep, string> = {
+    template: 'Pilih Template',
     personal: 'Data Pribadi',
     summary: 'Ringkasan',
     experience: 'Pengalaman',

@@ -60,14 +60,27 @@ export const useCVStore = create<CVStore>()(
     subscribeWithSelector((set, get) => ({
         // Initial State
         cvData: defaultCVData,
-        currentStep: 'personal',
+        currentStep: 'template',
         isLoading: false,
         isSaving: false,
 
-        // Set partial CV data
+        // Set partial CV data with ID safety for arrays
         setCVData: (data) => {
+            const updatedData = { ...data };
+
+            // Ensure all items in arrays have IDs (critical for AI import)
+            const arrayFields = ['experiences', 'education', 'skills', 'certifications'] as const;
+            arrayFields.forEach(field => {
+                if (updatedData[field] && Array.isArray(updatedData[field])) {
+                    updatedData[field] = (updatedData[field] as any[]).map(item => ({
+                        ...item,
+                        id: item.id || nanoid()
+                    }));
+                }
+            });
+
             set((state) => ({
-                cvData: { ...state.cvData, ...data },
+                cvData: { ...state.cvData, ...updatedData },
             }));
             get().saveToStorage();
         },
@@ -363,7 +376,7 @@ export const useCVStore = create<CVStore>()(
 
         // Reset CV to defaults
         resetCV: () => {
-            set({ cvData: defaultCVData, currentStep: 'personal' });
+            set({ cvData: defaultCVData, currentStep: 'template' });
             get().saveToStorage();
         },
     }))

@@ -8,6 +8,7 @@ import { ExperienceForm } from './ExperienceForm';
 import { EducationForm } from './EducationForm';
 import { CertificationForm } from './CertificationForm';
 import { SkillsForm } from './SkillsForm';
+import { TemplateChoiceForm } from './TemplateChoiceForm';
 import { ThemeCustomizer } from './ThemeCustomizer';
 import { ChevronLeft, ChevronRight, Check, Eye, FileDown, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -118,6 +119,8 @@ function StepContent({
     isExporting: boolean;
 }) {
     switch (step) {
+        case 'template':
+            return <TemplateChoiceForm />;
         case 'personal':
             return <PersonalInfoForm />;
         case 'summary':
