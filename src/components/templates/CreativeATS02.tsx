@@ -34,14 +34,14 @@ export function CreativeATS02({ data, className }: TemplateProps) {
                 )}
 
                 <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm text-slate-200">
-                    {personal.email && <span>📧 {personal.email}</span>}
-                    {personal.phone && <span>📱 {personal.phone}</span>}
-                    {personal.location && <span>📍 {personal.location}</span>}
+                    {personal.email && <span> {personal.email}</span>}
+                    {personal.phone && <span> {personal.phone}</span>}
+                    {personal.location && <span> {personal.location}</span>}
                 </div>
 
                 <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-slate-300">
                     {personal.linkedin && <span>🔗 {personal.linkedin}</span>}
-                    {personal.portfolio && <span>🌐 {personal.portfolio}</span>}
+                    {personal.portfolio && <span> {personal.portfolio}</span>}
                 </div>
             </header>
 
