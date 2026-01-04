@@ -42,6 +42,17 @@ export function loadCV(): CVData {
 
         const wrapper: StorageWrapper = JSON.parse(stored);
 
+        // Check if data is expired (24 hours)
+        const expirationTime = 24 * 60 * 60 * 1000; // 24 hours in ms
+        const lastSavedDate = new Date(wrapper.lastSaved).getTime();
+        const now = new Date().getTime();
+
+        if (now - lastSavedDate > expirationTime) {
+            console.warn('CV data expired (older than 24h), clearing storage');
+            localStorage.removeItem(STORAGE_KEY);
+            return defaultCVData;
+        }
+
         // Version check for future migrations
         if (wrapper.version !== STORAGE_VERSION) {
             console.warn('CV data version mismatch, using defaults');
