@@ -25,11 +25,13 @@ interface CVStore {
     addExperience: () => void;
     updateExperience: (id: string, data: Partial<Experience>) => void;
     removeExperience: (id: string) => void;
+    reorderExperience: (startIndex: number, endIndex: number) => void;
 
     // Actions - Education
     addEducation: () => void;
     updateEducation: (id: string, data: Partial<Education>) => void;
     removeEducation: (id: string) => void;
+    reorderEducation: (startIndex: number, endIndex: number) => void;
 
     // Actions - Skills
     addSkill: (skill: Omit<Skill, 'id'>) => void;
@@ -136,6 +138,20 @@ export const useCVStore = create<CVStore>()(
             get().saveToStorage();
         },
 
+        // Reorder experience
+        reorderExperience: (startIndex, endIndex) => {
+            const list = [...get().cvData.experiences];
+            const [removed] = list.splice(startIndex, 1);
+            list.splice(endIndex, 0, removed);
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    experiences: list,
+                },
+            }));
+            get().saveToStorage();
+        },
+
         // Add new education
         addEducation: () => {
             const newEdu: Education = {
@@ -174,6 +190,20 @@ export const useCVStore = create<CVStore>()(
                 cvData: {
                     ...state.cvData,
                     education: state.cvData.education.filter((edu) => edu.id !== id),
+                },
+            }));
+            get().saveToStorage();
+        },
+
+        // Reorder education
+        reorderEducation: (startIndex, endIndex) => {
+            const list = [...get().cvData.education];
+            const [removed] = list.splice(startIndex, 1);
+            list.splice(endIndex, 0, removed);
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    education: list,
                 },
             }));
             get().saveToStorage();
