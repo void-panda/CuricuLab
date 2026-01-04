@@ -35,7 +35,9 @@ interface CVStore {
 
     // Actions - Skills
     addSkill: (skill: Omit<Skill, 'id'>) => void;
+    updateSkill: (id: string, data: Partial<Skill>) => void;
     removeSkill: (id: string) => void;
+    reorderSkill: (startIndex: number, endIndex: number) => void;
 
     // Actions - Certifications
     addCertification: () => void;
@@ -230,12 +232,39 @@ export const useCVStore = create<CVStore>()(
             get().saveToStorage();
         },
 
+        // Update skill
+        updateSkill: (id, data) => {
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    skills: state.cvData.skills.map((skill) =>
+                        skill.id === id ? { ...skill, ...data } : skill
+                    ),
+                },
+            }));
+            get().saveToStorage();
+        },
+
         // Remove skill
         removeSkill: (id) => {
             set((state) => ({
                 cvData: {
                     ...state.cvData,
                     skills: state.cvData.skills.filter((skill) => skill.id !== id),
+                },
+            }));
+            get().saveToStorage();
+        },
+
+        // Reorder skills
+        reorderSkill: (startIndex, endIndex) => {
+            const list = [...get().cvData.skills];
+            const [removed] = list.splice(startIndex, 1);
+            list.splice(endIndex, 0, removed);
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    skills: list,
                 },
             }));
             get().saveToStorage();
