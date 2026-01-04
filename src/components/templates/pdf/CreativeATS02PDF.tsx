@@ -299,6 +299,35 @@ export const CreativeATS02PDF = ({ data }: PDFTemplateProps) => {
                                 ))}
                             </View>
                         )}
+
+                        {/* Certifications */}
+                        {data.certifications && data.certifications.length > 0 && (
+                            <View style={styles.section}>
+                                <View style={styles.sectionHeader}>
+                                    <View style={styles.sectionLine} />
+                                    <Text style={styles.sectionTitle}>Sertifikasi & Penghargaan</Text>
+                                </View>
+                                {data.certifications.map((cert) => (
+                                    <View key={cert.id} style={styles.experienceItem}>
+                                        <View style={styles.itemHeader}>
+                                            <Text style={styles.jobTitle}>{cert.name}</Text>
+                                            <Text style={styles.dateTag}>
+                                                {formatDate(cert.date)}
+                                            </Text>
+                                        </View>
+                                        <Text style={styles.company}>
+                                            {cert.issuer}{cert.url && ` • ${cert.url}`}
+                                        </Text>
+                                        {cert.description && (
+                                            <View style={styles.bulletPoint}>
+                                                <Text style={styles.bulletSymbol}>•</Text>
+                                                <Text style={styles.bulletText}>{cert.description}</Text>
+                                            </View>
+                                        )}
+                                    </View>
+                                ))}
+                            </View>
+                        )}
                     </View>
 
                     {/* Right - Sidebar */}

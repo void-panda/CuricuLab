@@ -6,6 +6,7 @@ import { PersonalInfoForm } from './PersonalInfoForm';
 import { SummaryForm } from './SummaryForm';
 import { ExperienceForm } from './ExperienceForm';
 import { EducationForm } from './EducationForm';
+import { CertificationForm } from './CertificationForm';
 import { SkillsForm } from './SkillsForm';
 import { ChevronLeft, ChevronRight, Check, Eye, FileDown, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -124,6 +125,8 @@ function StepContent({
             return <ExperienceForm />;
         case 'education':
             return <EducationForm />;
+        case 'certification':
+            return <CertificationForm />;
         case 'skills':
             return <SkillsForm />;
         case 'preview':

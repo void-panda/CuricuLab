@@ -123,6 +123,43 @@ export function CreativeATS02({ data, className }: TemplateProps) {
                             </div>
                         </section>
                     )}
+                    {/* Certifications Section */}
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section className="mb-6">
+                            <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2 mb-3">
+                                <span className="w-8 h-0.5 bg-slate-800"></span>
+                                Sertifikasi & Penghargaan
+                            </h2>
+                            <div className="space-y-3">
+                                {data.certifications.map((cert) => (
+                                    <div key={cert.id} className="relative pl-4 border-l-2 border-slate-300 break-inside-avoid">
+                                        <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-slate-800" />
+                                        <div className="flex justify-between items-baseline flex-wrap gap-x-4">
+                                            <h3 className="font-bold text-gray-900">
+                                                {cert.name}
+                                            </h3>
+                                            <span className="text-xs text-gray-500">
+                                                {formatDate(cert.date)}
+                                            </span>
+                                        </div>
+                                        <div className="text-slate-600">
+                                            {cert.issuer}
+                                        </div>
+                                        {cert.url && (
+                                            <a href={cert.url} target="_blank" rel="noopener noreferrer" className="text-xs text-primary underline mt-1 block">
+                                                Lihat Kredensial
+                                            </a>
+                                        )}
+                                        {cert.description && (
+                                            <p className="text-sm text-gray-600 mt-1">
+                                                {cert.description}
+                                            </p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Sidebar - 30% */}

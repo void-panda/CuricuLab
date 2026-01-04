@@ -48,7 +48,7 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
     } = await import('docx');
     const { saveAs } = await import('file-saver');
 
-    const { personal, summary, experiences, education, skills } = cvData;
+    const { personal, summary, experiences, education, skills, certifications } = cvData;
 
     // Helper to format date
     const formatDate = (dateString: string): string => {
@@ -164,6 +164,46 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                         spacing: { after: 100 },
                     })
                 );
+            });
+        }
+
+        // Certifications
+        if (certifications && certifications.length > 0) {
+            sections.push(
+                new Paragraph({
+                    text: 'SERTIFIKASI & PENGHARGAAN',
+                    heading: HeadingLevel.HEADING_1,
+                    spacing: { before: 300, after: 100 },
+                })
+            );
+
+            certifications.forEach((cert) => {
+                const certInfo = [
+                    cert.issuer,
+                    cert.url ? `Link: ${cert.url}` : null
+                ].filter(Boolean).join(' | ');
+
+                sections.push(
+                    new Paragraph({
+                        children: [
+                            new TextRun({ text: cert.name, bold: true }),
+                            new TextRun({ text: ` | ${formatDate(cert.date)}` }),
+                        ],
+                    }),
+                    new Paragraph({
+                        text: certInfo,
+                        spacing: { after: cert.description ? 50 : 100 },
+                    })
+                );
+
+                if (cert.description) {
+                    sections.push(
+                        new Paragraph({
+                            text: `• ${cert.description}`,
+                            spacing: { after: 100 },
+                        })
+                    );
+                }
             });
         }
 
@@ -363,6 +403,44 @@ export async function exportToDOCX(cvData: CVData): Promise<void> {
                         spacing: { after: 100 }
                     })
                 );
+            });
+        }
+
+        // Certifications
+        if (certifications && certifications.length > 0) {
+            mainContent.push(
+                new Paragraph({
+                    text: 'SERTIFIKASI & PENGHARGAAN',
+                    heading: HeadingLevel.HEADING_2,
+                    spacing: { before: 200, after: 100 },
+                })
+            );
+            certifications.forEach((cert) => {
+                mainContent.push(
+                    new Paragraph({
+                        children: [
+                            new TextRun({ text: cert.name, bold: true }),
+                        ],
+                        spacing: { before: 100 }
+                    }),
+                    new Paragraph({
+                        children: [
+                            new TextRun({ text: cert.issuer, bold: true, color: "666666" }),
+                            new TextRun({ text: ` | ${formatDate(cert.date)}`, italics: true, size: 20 })
+                        ]
+                    })
+                );
+
+                if (cert.description) {
+                    mainContent.push(
+                        new Paragraph({
+                            text: `• ${cert.description}`,
+                            spacing: { after: 50 },
+                            indent: { left: 200 }
+                        })
+                    );
+                }
+                mainContent.push(new Paragraph({ text: "", spacing: { after: 50 } }));
             });
         }
 

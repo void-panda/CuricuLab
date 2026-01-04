@@ -1,7 +1,7 @@
 // Zustand store for CV data state management
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import type { CVData, WizardStep, Experience, Education, Skill } from '@/types/cv';
+import type { CVData, WizardStep, Experience, Education, Skill, Certification } from '@/types/cv';
 import { defaultCVData, WIZARD_STEPS } from '@/types/cv';
 import { saveCV, loadCV } from '@/lib/storage';
 import { nanoid } from 'nanoid';
@@ -36,6 +36,12 @@ interface CVStore {
     // Actions - Skills
     addSkill: (skill: Omit<Skill, 'id'>) => void;
     removeSkill: (id: string) => void;
+
+    // Actions - Certifications
+    addCertification: () => void;
+    updateCertification: (id: string, data: Partial<Certification>) => void;
+    removeCertification: (id: string) => void;
+    reorderCertification: (startIndex: number, endIndex: number) => void;
 
     // Actions - Wizard
     setCurrentStep: (step: WizardStep) => void;
@@ -230,6 +236,63 @@ export const useCVStore = create<CVStore>()(
                 cvData: {
                     ...state.cvData,
                     skills: state.cvData.skills.filter((skill) => skill.id !== id),
+                },
+            }));
+            get().saveToStorage();
+        },
+
+        // Add new certification
+        addCertification: () => {
+            const newCert: Certification = {
+                id: nanoid(),
+                name: '',
+                issuer: '',
+                date: '',
+                url: '',
+                description: '',
+            };
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    certifications: [...state.cvData.certifications, newCert],
+                },
+            }));
+            get().saveToStorage();
+        },
+
+        // Update certification
+        updateCertification: (id, data) => {
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    certifications: state.cvData.certifications.map((cert) =>
+                        cert.id === id ? { ...cert, ...data } : cert
+                    ),
+                },
+            }));
+            get().saveToStorage();
+        },
+
+        // Remove certification
+        removeCertification: (id) => {
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    certifications: state.cvData.certifications.filter((cert) => cert.id !== id),
+                },
+            }));
+            get().saveToStorage();
+        },
+
+        // Reorder certification
+        reorderCertification: (startIndex, endIndex) => {
+            const list = [...get().cvData.certifications];
+            const [removed] = list.splice(startIndex, 1);
+            list.splice(endIndex, 0, removed);
+            set((state) => ({
+                cvData: {
+                    ...state.cvData,
+                    certifications: list,
                 },
             }));
             get().saveToStorage();

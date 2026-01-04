@@ -41,7 +41,7 @@ export function SummaryForm() {
 
     return (
         <Card className="neo-card w-full">
-            <CardHeader className="border-b-4 border-black dark:border-white bg-yellow-400 p-6 -mt-8 text-black">
+            <CardHeader className="border-b-4 border-black dark:border-white bg-green-400 p-6 -mt-8 text-black">
                 <CardTitle className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter">
                     <FileText className="h-5 w-5" />
                     Profil Diri

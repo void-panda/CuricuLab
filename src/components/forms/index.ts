@@ -4,4 +4,5 @@ export { SummaryForm } from './SummaryForm';
 export { ExperienceForm } from './ExperienceForm';
 export { EducationForm } from './EducationForm';
 export { SkillsForm } from './SkillsForm';
+export { CertificationForm } from './CertificationForm';
 export { FormWizard } from './FormWizard';

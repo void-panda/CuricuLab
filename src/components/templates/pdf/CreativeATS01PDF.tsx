@@ -235,6 +235,33 @@ export const CreativeATS01PDF = ({ data }: PDFTemplateProps) => {
                     </View>
                 )}
 
+                {/* Certifications */}
+                {data.certifications && data.certifications.length > 0 && (
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>Sertifikasi & Penghargaan</Text>
+                        {data.certifications.map((cert) => (
+                            <View key={cert.id} style={styles.experienceItem}>
+                                <View style={styles.itemHeader}>
+                                    <Text style={styles.role}>{cert.name}</Text>
+                                    <Text style={styles.date}>
+                                        {formatDate(cert.date)}
+                                    </Text>
+                                </View>
+                                <Text style={styles.company}>
+                                    {cert.issuer}
+                                    {cert.url ? ` • ${cert.url}` : ''}
+                                </Text>
+                                {cert.description && (
+                                    <View style={styles.bulletPoint}>
+                                        <Text style={styles.bulletSymbol}>•</Text>
+                                        <Text style={styles.bulletText}>{cert.description}</Text>
+                                    </View>
+                                )}
+                            </View>
+                        ))}
+                    </View>
+                )}
+
                 {/* Skills */}
                 {skills.length > 0 && (
                     <View style={styles.section}>

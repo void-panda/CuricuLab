@@ -123,7 +123,7 @@ export function SkillsForm() {
 
     return (
         <Card className="neo-card w-full mb-8">
-            <CardHeader className="border-b-4 border-black -mt-8 bg-yellow-400 p-6">
+            <CardHeader className="border-b-4 border-black -mt-8 bg-purple-400 p-6">
                 <CardTitle className="flex items-center gap-2 text-black text-2xl font-black uppercase tracking-tighter">
                     <Wrench className="h-6 w-6 stroke-3" />
                     KEAHLIAN

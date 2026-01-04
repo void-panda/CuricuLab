@@ -17,7 +17,7 @@ export function PersonalInfoForm() {
 
     return (
         <Card className="neo-card w-full mb-8">
-            <CardHeader className="border-b-4 border-black dark:border-white -mt-8 bg-yellow-400 p-6">
+            <CardHeader className="border-b-4 border-black dark:border-white -mt-8 bg-blue-400 p-6">
                 <CardTitle className="flex items-center gap-2 text-2xl text-black font-black uppercase tracking-tighter">
                     <User className="h-6 w-6 stroke-3" />
                     DATA PRIBADI

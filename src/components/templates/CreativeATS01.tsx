@@ -120,6 +120,38 @@ export function CreativeATS01({ data, className }: TemplateProps) {
                 </section>
             )}
 
+            {/* Certifications Section */}
+            {data.certifications && data.certifications.length > 0 && (
+                <section className="mb-6">
+                    <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
+                        SERTIFIKASI & PENGHARGAAN
+                    </h2>
+                    <div className="space-y-3">
+                        {data.certifications.map((cert) => (
+                            <div key={cert.id} className="break-inside-avoid">
+                                <div className="flex justify-between items-baseline flex-wrap gap-x-4">
+                                    <h3 className="font-bold text-gray-900">{cert.name}</h3>
+                                    <span className="text-sm text-gray-500">
+                                        {formatDate(cert.date)}
+                                    </span>
+                                </div>
+                                <div className="text-gray-700 font-medium">
+                                    {cert.issuer}
+                                    {cert.url && (
+                                        <a href={cert.url} target="_blank" rel="noopener noreferrer" className="ml-2 text-primary hover:underline font-normal text-sm">
+                                            (Lihat Kredensial)
+                                        </a>
+                                    )}
+                                </div>
+                                {cert.description && (
+                                    <p className="mt-1 text-gray-600 text-sm">{cert.description}</p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
             {/* Skills Section */}
             {skills.length > 0 && (
                 <section className="mb-6">

@@ -33,6 +33,15 @@ export interface Education {
     description?: string;
 }
 
+export interface Certification {
+    id: string;
+    name: string;
+    issuer: string;
+    date: string;
+    url?: string;
+    description?: string;
+}
+
 export interface Skill {
     id: string;
     name: string;
@@ -59,6 +68,7 @@ export interface CVData {
     experiences: Experience[];
     education: Education[];
     skills: Skill[];
+    certifications: Certification[];
     settings: CVSettings;
     lastUpdated?: string;
 }
@@ -75,6 +85,7 @@ export const defaultCVData: CVData = {
     experiences: [],
     education: [],
     skills: [],
+    certifications: [],
     settings: {
         targetRole: '',
         language: 'id',
@@ -93,6 +104,7 @@ export type WizardStep =
     | 'summary'
     | 'experience'
     | 'education'
+    | 'certification'
     | 'skills'
     | 'preview';
 
@@ -101,6 +113,7 @@ export const WIZARD_STEPS: WizardStep[] = [
     'summary',
     'experience',
     'education',
+    'certification',
     'skills',
     'preview',
 ];
@@ -110,6 +123,7 @@ export const WIZARD_STEP_LABELS: Record<WizardStep, string> = {
     summary: 'Ringkasan',
     experience: 'Pengalaman',
     education: 'Pendidikan',
+    certification: 'Sertifikasi',
     skills: 'Keahlian',
     preview: 'Preview',
 };
