@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useCVStore } from '@/lib/store';
 import { FormWizard } from '@/components/forms';
 import { TemplateRenderer } from '@/components/templates';
-import { OnboardingModal } from '@/components/OnboardingModal';
+import { OnboardingTour } from '@/components/OnboardingTour';
 import { exportToPDF, exportToDOCX } from '@/lib/export';
 import { Loader2 } from 'lucide-react';
 
@@ -52,7 +52,7 @@ export function CVBuilder() {
     return (
         <>
             {/* Onboarding Flow */}
-            <OnboardingModal />
+            <OnboardingTour />
 
             <div className="flex h-[calc(100vh-var(--header-height)-var(--footer-height))] flex-col lg:flex-row bg-background dark:bg-muted/30 transition-colors">
                 {/* Form Section */}

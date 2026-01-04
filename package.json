@@ -39,6 +39,7 @@
     "astro": "^5.16.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "driver.js": "^1.4.0",
     "file-saver": "^2.0.5",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",

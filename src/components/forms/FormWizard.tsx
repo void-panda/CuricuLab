@@ -225,7 +225,7 @@ export function FormWizard({
     return (
         <div className="flex h-full flex-col bg-white dark:bg-card transition-colors">
             {/* Step Indicator */}
-            <div className="border-b-4 border-black bg-white dark:bg-card p-4 transition-colors">
+            <div id="step-indicator" className="border-b-4 border-black bg-white dark:bg-card p-4 transition-colors">
                 <StepIndicator
                     steps={WIZARD_STEPS}
                     currentStep={currentStep}
@@ -234,7 +234,7 @@ export function FormWizard({
             </div>
 
             {/* Form Content */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-white dark:bg-card transition-colors">
+            <div id="step-form-content" className="flex-1 overflow-y-auto p-4 md:p-6 bg-white dark:bg-card transition-colors">
                 <div className="mx-auto max-w-2xl">
                     <StepContent
                         step={currentStep}
@@ -246,7 +246,7 @@ export function FormWizard({
             </div>
 
             {/* Navigation */}
-            <div className="border-t-4 border-black bg-white dark:bg-card p-6 transition-colors">
+            <div id="step-navigation" className="border-t-4 border-black bg-white dark:bg-card p-6 transition-colors">
                 <div className="mx-auto flex max-w-2xl items-center justify-between">
                     <Button
                         type="button"

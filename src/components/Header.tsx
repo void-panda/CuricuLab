@@ -2,6 +2,7 @@ import * as React from "react";
 import { FileText, Github, Sparkles } from "lucide-react";
 import { MobileNav } from "@/components/MobileNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ApiSettings } from "@/components/ApiSettings";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -13,7 +14,7 @@ export function Header() {
 
 
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
+          <a href="/" id="step-logo" className="flex items-center gap-2 transition-opacity hover:opacity-90">
             <span className="text-xl sm:text-2xl font-black tracking-tighter flex items-center">
               Curicu<span className="text-primary">Lab</span>
               <span className="text-primary ml-0.5 animate-pulse">.</span>
@@ -61,7 +62,7 @@ export function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
-            <a href="/builder">
+            <a href="/builder" id="step-build-btn">
               <Button size="sm" className="hidden gap-2 sm:inline-flex">
                 <Sparkles className="h-4 w-4" />
                 Mulai Buat CV
@@ -82,6 +83,9 @@ export function Header() {
               </Button>
             </a>
             <ThemeToggle />
+            <div id="step-settings">
+              <ApiSettings />
+            </div>
             <MobileNav className="flex lg:hidden" />
           </div>
         </div>
