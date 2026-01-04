@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://curiculab.com/sitemap-index.xml

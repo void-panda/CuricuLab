@@ -20,6 +20,22 @@ const ogImageURL = ogImage
   ? new URL(ogImage, Astro.site).toString()
   : new URL("og-image.png", canonicalURL).toString();
 const faviconURL = new URL("favicon.svg", canonicalURL).toString();
+
+// JSON-LD Structured Data
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "CuricuLab",
+  operatingSystem: "Any",
+  applicationCategory: "BusinessApplication",
+  description: description,
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  url: canonicalURL,
+};
 ---
 
 <!-- Basic -->
@@ -27,6 +43,14 @@ const faviconURL = new URL("favicon.svg", canonicalURL).toString();
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 <meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#ff5722" />
+<link rel="manifest" href="/manifest.json" />
+
+<!-- SEO Keywords -->
+<meta
+  name="keywords"
+  content="CV Builder, AI CV, Pembuat CV, ATS Friendly CV, Gemini AI, CurricuLab, Resume Builder"
+/>
 
 <!-- Canonical -->
 <link rel="canonical" href={canonicalURL} />
@@ -42,9 +66,13 @@ const faviconURL = new URL("favicon.svg", canonicalURL).toString();
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageURL} />
+<meta property="og:site_name" content="CuricuLab" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageURL} />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

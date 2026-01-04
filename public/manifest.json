@@ -1,0 +1,16 @@
+{
+    "name": "CuricuLab",
+    "short_name": "CuricuLab",
+    "description": "AI-Powered CV Builder. Create ATS-friendly CVs in minutes.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ff5722",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}
