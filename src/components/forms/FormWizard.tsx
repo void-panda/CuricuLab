@@ -10,8 +10,20 @@ import { CertificationForm } from './CertificationForm';
 import { SkillsForm } from './SkillsForm';
 import { TemplateChoiceForm } from './TemplateChoiceForm';
 import { ThemeCustomizer } from './ThemeCustomizer';
-import { ChevronLeft, ChevronRight, Check, Eye, FileDown, FileText } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, Eye, FileDown, FileText, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from 'sonner';
 
 // Step indicator component
 function StepIndicator({
@@ -194,7 +206,18 @@ export function FormWizard({
     onExportDOCX,
     isExporting = false
 }: FormWizardProps) {
-    const { currentStep, setCurrentStep, nextStep, prevStep } = useCVStore();
+    const { cvData, currentStep, setCurrentStep, nextStep, prevStep, resetCV } = useCVStore();
+
+    // Check if there is any user-entered data
+    const isDirty =
+        cvData.personal.fullName !== '' ||
+        cvData.personal.email !== '' ||
+        cvData.summary !== '' ||
+        cvData.experiences.length > 0 ||
+        cvData.education.length > 0 ||
+        cvData.skills.length > 0 ||
+        cvData.certifications.length > 0;
+
     const currentIndex = WIZARD_STEPS.indexOf(currentStep);
     const isFirstStep = currentIndex === 0;
     const isLastStep = currentIndex === WIZARD_STEPS.length - 1;
@@ -240,18 +263,58 @@ export function FormWizard({
                         STEP {currentIndex + 1}/{WIZARD_STEPS.length}
                     </span>
 
-                    <Button
-                        type="button"
-                        onClick={nextStep}
-                        disabled={isLastStep}
-                        className={cn(
-                            "h-12 border-2 border-black dark:border-white px-8 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-primary text-white gap-2 uppercase",
-                            isLastStep && "opacity-50 cursor-not-allowed"
+                    <div className="flex items-center gap-4">
+                        {isDirty && (
+                            <AlertDialog>
+                                <AlertDialogTrigger
+                                    render={
+                                        <Button
+                                            type="button"
+                                            className="h-12 border-2 border-black dark:border-white px-6 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-secondary text-black gap-2 uppercase"
+                                        >
+                                            <RotateCcw className="h-4 w-4" />
+                                            ULANGI
+                                        </Button>
+                                    }
+                                />
+                                <AlertDialogContent className="border-8 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle className="text-2xl font-black uppercase tracking-tight">Hapus Semua Data?</AlertDialogTitle>
+                                        <AlertDialogDescription className="text-base font-bold text-muted-foreground">
+                                            Tindakan ini akan menghapus semua progress CV Anda secara permanen dari browser ini. Data yang sudah dihapus tidak bisa dikembalikan.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter className="gap-2 sm:gap-0">
+                                        <AlertDialogCancel className="border-4 border-black font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+                                            Batal
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction
+                                            onClick={() => {
+                                                resetCV();
+                                                toast.success("Progress berhasil direset.");
+                                            }}
+                                            className="bg-red-500 text-white border-4 border-black font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-red-600"
+                                        >
+                                            Ya, Mulai Ulang
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                         )}
-                    >
-                        {isLastStep ? 'FINISH' : 'NEXT'}
-                        {!isLastStep && <ChevronRight className="h-4 w-4" />}
-                    </Button>
+
+                        <Button
+                            type="button"
+                            onClick={nextStep}
+                            disabled={isLastStep}
+                            className={cn(
+                                "h-12 border-2 border-black dark:border-white px-8 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_white] hover:translate-x-px hover:translate-y-px hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all bg-primary text-white gap-2 uppercase",
+                                isLastStep && "opacity-50 cursor-not-allowed"
+                            )}
+                        >
+                            {isLastStep ? 'FINISH' : 'NEXT'}
+                            {!isLastStep && <ChevronRight className="h-4 w-4" />}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
