@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { FileText, Sparkles, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { enhanceSummary } from '@/lib/api';
 
 export function SummaryForm() {
@@ -29,6 +30,7 @@ export function SummaryForm() {
                 cvData.settings.language
             );
             setSummary(enhanced);
+            toast.success("Ringkasan profesional Anda berhasil dibuat!");
         } catch (err) {
             setError('Gagal meningkatkan ringkasan. Silakan coba lagi.');
             console.error('Enhancement error:', err);

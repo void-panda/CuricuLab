@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Briefcase, Plus, Trash2, Sparkles, Loader2, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
+import { toast } from 'sonner';
 import { enhanceExperience } from '@/lib/api';
 import {
     DndContext,
@@ -74,6 +75,7 @@ function ExperienceItem({
                 cvData.settings.language
             );
             onUpdate({ description: enhanced, isEnhanced: true });
+            toast.success("Deskripsi pekerjaan berhasil ditingkatkan!");
         } catch (err) {
             setError('Gagal meningkatkan deskripsi. Silakan coba lagi.');
             console.error('Enhancement error:', err);

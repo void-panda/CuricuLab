@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Wrench, Plus, X, Sparkles, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { suggestSkills } from '@/lib/api';
 import { cn } from '@/lib/utils';
 
@@ -97,6 +98,7 @@ export function SkillsForm() {
                 cvData.settings.language
             );
             setSuggestions(suggestedSkills);
+            toast.success("Saran keahlian berhasil dimuat!");
         } catch (err) {
             setError('Gagal mendapatkan saran skill. Silakan coba lagi.');
             console.error('Suggestion error:', err);
